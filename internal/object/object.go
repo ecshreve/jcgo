@@ -21,9 +21,9 @@ func (objs ByPrefix) Len() int           { return len(objs) }
 func (objs ByPrefix) Less(i, j int) bool { return objs[i].getPrefix() < objs[j].getPrefix() }
 func (objs ByPrefix) Swap(i, j int)      { objs[i], objs[j] = objs[j], objs[i] }
 
-// ObjectFromInterface returns an Object for the given input interface{}, or an
+// FromInterface returns an Object for the given input interface{}, or an
 // error if the interface is of an invalid type.
-func ObjectFromInterface(prefix string, input interface{}) (Object, error) {
+func FromInterface(prefix string, input interface{}) (Object, error) {
 	switch vv := input.(type) {
 	case string:
 		return NewStringObj(prefix, vv), nil
@@ -152,7 +152,7 @@ func NewMapObj(prefix string, input map[string]interface{}) (*MapObj, error) {
 
 	for k, v := range input {
 		newPrefix := fmt.Sprintf("%s%s%s", prefix, connector, k)
-		obj, err := ObjectFromInterface(newPrefix, v)
+		obj, err := FromInterface(newPrefix, v)
 		if err != nil {
 			return nil, oops.Wrapf(err, "unable to create MapObj")
 		}
@@ -225,7 +225,7 @@ func NewSliceObj(prefix string, input []interface{}) (*SliceObj, error) {
 	var vals []Object
 
 	for _, v := range input {
-		obj, err := ObjectFromInterface(prefix, v)
+		obj, err := FromInterface(prefix, v)
 		if err != nil {
 			return nil, oops.Wrapf(err, "unable to create SliceObj")
 		}

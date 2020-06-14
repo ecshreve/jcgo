@@ -1,6 +1,9 @@
 build:
 	go build -o bin/jcgo github.com/ecshreve/jcgo/cmd/jcgo
 
+install:
+	go install -i github.com/ecshreve/jcgo/cmd/jcgo
+
 run-only:
 	bin/jcgo $(INFILE)
 
@@ -12,5 +15,3 @@ test:
 testv:
 	go test -v github.com/ecshreve/jcgo/...
 
-clean:
-	rm *.csv
