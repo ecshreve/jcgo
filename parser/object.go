@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
+
+	"github.com/samsarahq/go/oops"
 )
 
 // Object is representation of a JSON object.
 type Object interface {
 	getPrefix() string
-	Parse() [][]string
+	Parse() ([][]string, error)
 }
 
 // ByPrefix implements the sort.Interface on the Prefix field.
@@ -56,11 +58,11 @@ func (o StringObj) getPrefix() string {
 }
 
 // Parse returns the 2d slice of strings for the given StringObj.
-func (o StringObj) Parse() [][]string {
+func (o StringObj) Parse() ([][]string, error) {
 	return [][]string{
 		[]string{o.Prefix},
 		[]string{o.Val},
-	}
+	}, nil
 }
 
 // BoolObj implements the Object interface for a float value.
@@ -82,11 +84,11 @@ func (o BoolObj) getPrefix() string {
 }
 
 // Parse returns the 2d slice of strings for the given BoolObj.
-func (o BoolObj) Parse() [][]string {
+func (o BoolObj) Parse() ([][]string, error) {
 	return [][]string{
 		[]string{o.Prefix},
 		[]string{strconv.FormatBool(o.Val)},
-	}
+	}, nil
 }
 
 // FloatObj implements the Object interface for a float value.
@@ -108,7 +110,7 @@ func (o FloatObj) getPrefix() string {
 }
 
 // Parse returns the 2d slice of strings for the given FloatObj.
-func (o FloatObj) Parse() [][]string {
+func (o FloatObj) Parse() ([][]string, error) {
 	floatVal := o.Val
 
 	var stringVal string
@@ -121,7 +123,7 @@ func (o FloatObj) Parse() [][]string {
 	return [][]string{
 		[]string{o.Prefix},
 		[]string{stringVal},
-	}
+	}, nil
 }
 
 // MapObj implements the Object interface for a JSON map.
@@ -157,35 +159,31 @@ func (o MapObj) getPrefix() string {
 }
 
 // Parse returns the 2d slice of strings for the given MapObj.
-func (o MapObj) Parse() [][]string {
+func (o MapObj) Parse() ([][]string, error) {
 	var ret [][]string
 
 	for _, item := range o.Val {
-		parsed := item.Parse()
+		parsed, err := item.Parse()
+		if err != nil {
+			return nil, oops.Wrapf(err, "unable to parse item: %+v", item)
+		}
 
 		if ret == nil {
 			ret = parsed
 			continue
 		}
+		lastRow := ret[len(ret)-1]
 
 		ret[0] = append(ret[0], parsed[0]...)
-
-		if len(parsed) == 2 {
-			for i := 1; i < len(ret); i++ {
-				ret[i] = append(ret[i], parsed[1]...)
-			}
-		} else {
-			lastRow := ret[len(ret)-1]
-			for i := 1; i < len(parsed)-1; i++ {
+		for i := 1; i < len(parsed); i++ {
+			if i == len(ret) {
 				ret = append(ret, lastRow)
 			}
-			for i := 1; i < len(ret); i++ {
-				ret[i] = append(ret[i], parsed[i]...)
-			}
+			ret[i] = append(ret[i], parsed[i]...)
 		}
 	}
 
-	return ret
+	return ret, nil
 }
 
 // SliceObj implements the Object interface for a JSON array.
@@ -215,11 +213,15 @@ func (o SliceObj) getPrefix() string {
 }
 
 // Parse returns the 2d slice of strings for the given SliceObj.
-func (o SliceObj) Parse() [][]string {
+func (o SliceObj) Parse() ([][]string, error) {
 	var ret [][]string
 
 	for _, item := range o.Val {
-		parsed := item.Parse()
+		parsed, err := item.Parse()
+		if err != nil {
+			return nil, oops.Wrapf(err, "unable to parse item: %+v", item)
+		}
+
 		if len(ret) == 0 {
 			ret = append(ret, parsed[0])
 		}
@@ -227,5 +229,5 @@ func (o SliceObj) Parse() [][]string {
 		ret = append(ret, parsed[1:]...)
 	}
 
-	return ret
+	return ret, nil
 }
