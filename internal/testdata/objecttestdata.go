@@ -1,6 +1,6 @@
 package testdata
 
-import "github.com/ecshreve/jcgo/parser/object"
+import "github.com/ecshreve/jcgo/internal/object"
 
 type ObjectTestData struct {
 	SimpleMapObj            *object.MapObj

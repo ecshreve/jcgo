@@ -4,12 +4,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/samsarahq/go/snapshotter"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ecshreve/jcgo/parser"
-	"github.com/ecshreve/jcgo/parser/object"
-	"github.com/ecshreve/jcgo/parser/object/testdata"
+	"github.com/ecshreve/jcgo/internal/object"
+	"github.com/ecshreve/jcgo/internal/parser"
+	"github.com/ecshreve/jcgo/internal/testdata"
 )
 
 func TestTransform(t *testing.T) {
@@ -188,22 +187,18 @@ func TestTransform(t *testing.T) {
 }
 
 func TestFileOperations(t *testing.T) {
-	snap := snapshotter.New(t)
-	defer snap.Verify()
-
 	// Verify we can read a valid json file.
-	raw, err := parser.ReadJSONFile("testdata/jsontest.json")
+	raw, err := parser.ReadJSONFile("../testdata/jsontest.json")
 	assert.NoError(t, err)
 	assert.NotNil(t, raw)
-	snap.Snapshot("read valid json file", raw)
 
 	// Expect error if file doesn't exist.
-	raw, err = parser.ReadJSONFile("testdata/nonexistentfile.json")
+	raw, err = parser.ReadJSONFile("../testdata/nonexistentfile.json")
 	assert.Error(t, err)
 	assert.Nil(t, raw)
 
 	// Expect error if file is malformed.
-	raw, err = parser.ReadJSONFile("testdata/jsontest_bad.json")
+	raw, err = parser.ReadJSONFile("../testdata/jsontest_bad.json")
 	assert.Error(t, err)
 	assert.Nil(t, raw)
 
@@ -212,20 +207,20 @@ func TestFileOperations(t *testing.T) {
 		[]string{"one", "two"},
 		[]string{"one_one", "two_two"},
 	}
-	file, err := parser.WriteCSVFile(data, "testdata/testoutput.csv")
+	file, err := parser.WriteCSVFile(data, "../testdata/testoutput.csv")
 	assert.NoError(t, err)
 	assert.NotNil(t, file)
 
 	// Expect error for a bad path.
-	file, err = parser.WriteCSVFile(data, "testdata/nonexistentdirectory/testoutput.xls")
+	file, err = parser.WriteCSVFile(data, "../testdata/nonexistentdirectory/testoutput.xls")
 	assert.Error(t, err)
 	assert.Nil(t, file)
-	os.Remove("testdata/testoutput.csv")
+	os.Remove("../testdata/testoutput.csv")
 }
 
 func TestConvert(t *testing.T) {
-	file, err := parser.Convert("testdata/jsontest.json")
+	file, err := parser.Convert("../testdata/jsontest.json")
 	assert.NoError(t, err)
 	assert.NotNil(t, file)
-	assert.Equal(t, "testdata/jsontest.output.csv", file.Name())
+	assert.Equal(t, "../testdata/jsontest.output.csv", file.Name())
 }

@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	oo "github.com/ecshreve/jcgo/parser/object"
+	oo "github.com/ecshreve/jcgo/internal/object"
 	"github.com/samsarahq/go/oops"
 )
 
