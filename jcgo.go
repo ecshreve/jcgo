@@ -48,7 +48,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("successfully created file %s\n", outfile)
+	log.Printf("successfully created file %s\n", outfile.Name())
 	defer outfile.Close()
 
 	writer := csv.NewWriter(outfile)
