@@ -117,29 +117,48 @@ func TestTransform(t *testing.T) {
 						},
 						"nestedslice": []interface{}{
 							map[string]interface{}{
-								"nestedslicemap1": "nestedslicemapval1",
-								"nestedslicemap2": "nestedslicemapval2",
+								"before": []interface{}{
+									map[string]interface{}{
+										"nestedslicemap1": "nestedslicemapval1",
+										"nestedslicemap2": "nestedslicemapval2",
+									},
+									map[string]interface{}{
+										"nestedslicemap1": "nestedslicemapval3",
+										"nestedslicemap2": "nestedslicemapval4",
+									},
+								},
+								"after": []interface{}{
+									map[string]interface{}{
+										"nestedslicemap1": "nestedslicemapval5",
+										"nestedslicemap2": "nestedslicemapval6",
+									},
+									map[string]interface{}{
+										"nestedslicemap1": "nestedslicemapval7",
+										"nestedslicemap2": "nestedslicemapval8",
+									},
+								},
 							},
 							map[string]interface{}{
-								"nestedslicemap1": "nestedslicemapval3",
-								"nestedslicemap2": "nestedslicemapval4",
-							},
-						},
-					},
-					map[string]interface{}{
-						"key1": "val4",
-						"nestedmap": map[string]interface{}{
-							"nested1": "nestedval3",
-							"nested2": "nestedval4",
-						},
-						"nestedslice": []interface{}{
-							map[string]interface{}{
-								"nestedslicemap1": "nestedslicemapval5",
-								"nestedslicemap2": "nestedslicemapval6",
-							},
-							map[string]interface{}{
-								"nestedslicemap1": "nestedslicemapval7",
-								"nestedslicemap2": "nestedslicemapval8",
+								"before": []interface{}{
+									map[string]interface{}{
+										"nestedslicemap1": "nestedslicemapval11",
+										"nestedslicemap2": "nestedslicemapval12",
+									},
+									map[string]interface{}{
+										"nestedslicemap1": "nestedslicemapval13",
+										"nestedslicemap2": "nestedslicemapval14",
+									},
+								},
+								"after": []interface{}{
+									map[string]interface{}{
+										"nestedslicemap1": "nestedslicemapval15",
+										"nestedslicemap2": "nestedslicemapval16",
+									},
+									map[string]interface{}{
+										"nestedslicemap1": "nestedslicemapval17",
+										"nestedslicemap2": "nestedslicemapval18",
+									},
+								},
 							},
 						},
 					},
@@ -233,18 +252,18 @@ func TestParse(t *testing.T) {
 			description: "complex map with nested maps and slices",
 			input:       data.ComplexMapObj,
 			expected: [][]string{
-				[]string{"data_key1", "data_nestedmap_nested1", "data_nestedmap_nested2", "data_nestedslice_nestedslicemap1", "data_nestedslice_nestedslicemap2"},
-				[]string{"val1", "nestedval1", "nestedval2", "nestedslicemapval1", "nestedslicemapval2"},
-				[]string{"val1", "nestedval1", "nestedval2", "nestedslicemapval3", "nestedslicemapval4"},
-				[]string{"val4", "nestedval3", "nestedval4", "nestedslicemapval5", "nestedslicemapval6"},
-				[]string{"val4", "nestedval3", "nestedval4", "nestedslicemapval7", "nestedslicemapval8"},
+				[]string{"data_key1", "data_nestedmap_nested1", "data_nestedmap_nested2", "data_nestedslice_after_nestedslicemap1", "data_nestedslice_after_nestedslicemap2", "data_nestedslice_before_nestedslicemap1", "data_nestedslice_before_nestedslicemap2"},
+				[]string{"val1", "nestedval1", "nestedval2", "nestedslicemapval5", "nestedslicemapval6", "nestedslicemapval1", "nestedslicemapval2"},
+				[]string{"val1", "nestedval1", "nestedval2", "nestedslicemapval7", "nestedslicemapval8", "nestedslicemapval3", "nestedslicemapval4"},
+				[]string{"val1", "nestedval1", "nestedval2", "nestedslicemapval15", "nestedslicemapval16", "nestedslicemapval11", "nestedslicemapval12"},
+				[]string{"val1", "nestedval1", "nestedval2", "nestedslicemapval17", "nestedslicemapval18", "nestedslicemapval13", "nestedslicemapval14"},
 			},
 		},
 	}
 
 	for _, testcase := range testcases {
 		t.Run(testcase.description, func(t *testing.T) {
-			actual := testcase.input.Parse()
+			actual, _ := testcase.input.Parse()
 			assert.Equal(t, testcase.expected, actual)
 		})
 	}

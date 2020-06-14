@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/kr/pretty"
+	"github.com/ecshreve/jcgo/parser"
 )
 
 func main() {
@@ -40,5 +40,6 @@ func main() {
 	var result map[string]interface{}
 	json.Unmarshal([]byte(byteValue), &result)
 
-	pretty.Print(result)
+	transformed := parser.Transform(result)
+	parser.Parse(transformed)
 }

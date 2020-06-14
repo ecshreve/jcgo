@@ -240,79 +240,134 @@ func NewObjectTestData() *ObjectTestData {
 									&parser.MapObj{
 										Prefix: "data_nestedslice",
 										Val: []parser.Object{
-											&parser.StringObj{
-												Prefix: "data_nestedslice_nestedslicemap1",
-												Val:    "nestedslicemapval1",
+											&parser.SliceObj{
+												Prefix: "data_nestedslice_after",
+												Val: []parser.Object{
+													&parser.MapObj{
+														Prefix: "data_nestedslice_after",
+														Val: []parser.Object{
+															&parser.StringObj{
+																Prefix: "data_nestedslice_after_nestedslicemap1",
+																Val:    "nestedslicemapval5",
+															},
+															&parser.StringObj{
+																Prefix: "data_nestedslice_after_nestedslicemap2",
+																Val:    "nestedslicemapval6",
+															},
+														},
+													},
+													&parser.MapObj{
+														Prefix: "data_nestedslice_after",
+														Val: []parser.Object{
+															&parser.StringObj{
+																Prefix: "data_nestedslice_after_nestedslicemap1",
+																Val:    "nestedslicemapval7",
+															},
+															&parser.StringObj{
+																Prefix: "data_nestedslice_after_nestedslicemap2",
+																Val:    "nestedslicemapval8",
+															},
+														},
+													},
+												},
 											},
-											&parser.StringObj{
-												Prefix: "data_nestedslice_nestedslicemap2",
-												Val:    "nestedslicemapval2",
+											&parser.SliceObj{
+												Prefix: "data_nestedslice_before",
+												Val: []parser.Object{
+													&parser.MapObj{
+														Prefix: "data_nestedslice_before",
+														Val: []parser.Object{
+															&parser.StringObj{
+																Prefix: "data_nestedslice_before_nestedslicemap1",
+																Val:    "nestedslicemapval1",
+															},
+															&parser.StringObj{
+																Prefix: "data_nestedslice_before_nestedslicemap2",
+																Val:    "nestedslicemapval2",
+															},
+														},
+													},
+													&parser.MapObj{
+														Prefix: "data_nestedslice_before",
+														Val: []parser.Object{
+															&parser.StringObj{
+																Prefix: "data_nestedslice_before_nestedslicemap1",
+																Val:    "nestedslicemapval3",
+															},
+															&parser.StringObj{
+																Prefix: "data_nestedslice_before_nestedslicemap2",
+																Val:    "nestedslicemapval4",
+															},
+														},
+													},
+												},
 											},
 										},
 									},
 									&parser.MapObj{
 										Prefix: "data_nestedslice",
 										Val: []parser.Object{
-											&parser.StringObj{
-												Prefix: "data_nestedslice_nestedslicemap1",
-												Val:    "nestedslicemapval3",
+											&parser.SliceObj{
+												Prefix: "data_nestedslice_after",
+												Val: []parser.Object{
+													&parser.MapObj{
+														Prefix: "data_nestedslice_after",
+														Val: []parser.Object{
+															&parser.StringObj{
+																Prefix: "data_nestedslice_after_nestedslicemap1",
+																Val:    "nestedslicemapval15",
+															},
+															&parser.StringObj{
+																Prefix: "data_nestedslice_after_nestedslicemap2",
+																Val:    "nestedslicemapval16",
+															},
+														},
+													},
+													&parser.MapObj{
+														Prefix: "data_nestedslice_after",
+														Val: []parser.Object{
+															&parser.StringObj{
+																Prefix: "data_nestedslice_after_nestedslicemap1",
+																Val:    "nestedslicemapval17",
+															},
+															&parser.StringObj{
+																Prefix: "data_nestedslice_after_nestedslicemap2",
+																Val:    "nestedslicemapval18",
+															},
+														},
+													},
+												},
 											},
-											&parser.StringObj{
-												Prefix: "data_nestedslice_nestedslicemap2",
-												Val:    "nestedslicemapval4",
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-					&parser.MapObj{
-						Prefix: "data",
-						Val: []parser.Object{
-							&parser.StringObj{
-								Prefix: "data_key1",
-								Val:    "val4",
-							},
-							&parser.MapObj{
-								Prefix: "data_nestedmap",
-								Val: []parser.Object{
-									&parser.StringObj{
-										Prefix: "data_nestedmap_nested1",
-										Val:    "nestedval3",
-									},
-									&parser.StringObj{
-										Prefix: "data_nestedmap_nested2",
-										Val:    "nestedval4",
-									},
-								},
-							},
-							&parser.SliceObj{
-								Prefix: "data_nestedslice",
-								Val: []parser.Object{
-									&parser.MapObj{
-										Prefix: "data_nestedslice",
-										Val: []parser.Object{
-											&parser.StringObj{
-												Prefix: "data_nestedslice_nestedslicemap1",
-												Val:    "nestedslicemapval5",
-											},
-											&parser.StringObj{
-												Prefix: "data_nestedslice_nestedslicemap2",
-												Val:    "nestedslicemapval6",
-											},
-										},
-									},
-									&parser.MapObj{
-										Prefix: "data_nestedslice",
-										Val: []parser.Object{
-											&parser.StringObj{
-												Prefix: "data_nestedslice_nestedslicemap1",
-												Val:    "nestedslicemapval7",
-											},
-											&parser.StringObj{
-												Prefix: "data_nestedslice_nestedslicemap2",
-												Val:    "nestedslicemapval8",
+											&parser.SliceObj{
+												Prefix: "data_nestedslice_before",
+												Val: []parser.Object{
+													&parser.MapObj{
+														Prefix: "data_nestedslice_before",
+														Val: []parser.Object{
+															&parser.StringObj{
+																Prefix: "data_nestedslice_before_nestedslicemap1",
+																Val:    "nestedslicemapval11",
+															},
+															&parser.StringObj{
+																Prefix: "data_nestedslice_before_nestedslicemap2",
+																Val:    "nestedslicemapval12",
+															},
+														},
+													},
+													&parser.MapObj{
+														Prefix: "data_nestedslice_before",
+														Val: []parser.Object{
+															&parser.StringObj{
+																Prefix: "data_nestedslice_before_nestedslicemap1",
+																Val:    "nestedslicemapval13",
+															},
+															&parser.StringObj{
+																Prefix: "data_nestedslice_before_nestedslicemap2",
+																Val:    "nestedslicemapval14",
+															},
+														},
+													},
+												},
 											},
 										},
 									},
