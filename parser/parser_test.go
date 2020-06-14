@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/kr/pretty"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/ecshreve/jcgo/parser"
@@ -37,6 +36,7 @@ func TestTransform(t *testing.T) {
 				"key1": "val1",
 				"key2": float64(5),
 				"key3": float64(5.5),
+				"key4": true,
 			},
 			expected: data.SimpleAllTypesMapObj,
 		},
@@ -191,8 +191,8 @@ func TestParse(t *testing.T) {
 			description: "simple map with all possible data types",
 			input:       data.SimpleAllTypesMapObj,
 			expected: [][]string{
-				[]string{"key1", "key2", "key3"},
-				[]string{"val1", "5", "5.5"},
+				[]string{"key1", "key2", "key3", "key4"},
+				[]string{"val1", "5", "5.5", "true"},
 			},
 		},
 		{
@@ -246,7 +246,6 @@ func TestParse(t *testing.T) {
 		t.Run(testcase.description, func(t *testing.T) {
 			actual := testcase.input.Parse()
 			assert.Equal(t, testcase.expected, actual)
-			pretty.Print(actual)
 		})
 	}
 }
