@@ -3,6 +3,8 @@ package parser
 import (
 	"fmt"
 	"sort"
+
+	"github.com/kr/pretty"
 )
 
 // Object is representation of a JSON object.
@@ -58,7 +60,19 @@ func (o SliceObj) getPrefix() string {
 }
 
 func (o SliceObj) Parse() [][]string {
-	return nil
+	var ret [][]string
+
+	for _, item := range o.Val {
+		parsed := item.Parse()
+		if len(ret) == 0 {
+			ret = append(ret, parsed[0])
+		}
+
+		ret = append(ret, parsed[1])
+	}
+
+	pretty.Print(ret)
+	return ret
 }
 
 // MapObj implements the Object interface for a JSON map.
@@ -97,14 +111,28 @@ func (o MapObj) getPrefix() string {
 func (o MapObj) Parse() [][]string {
 	var keys []string
 	var vals []string
+	var ret [][]string
 
 	for _, item := range o.Val {
 		parsed := item.Parse()
-		keys = append(keys, parsed[0]...)
-		vals = append(vals, parsed[1]...)
+
+		if len(parsed) > 2 {
+			if ret == nil {
+				ret = append(ret, parsed[0])
+				ret = append(ret, parsed[1:]...)
+			}
+		} else {
+			keys = append(keys, parsed[0]...)
+			vals = append(vals, parsed[1]...)
+		}
 	}
 
-	return [][]string{keys, vals}
+	if ret == nil {
+		ret = append(ret, keys)
+		ret = append(ret, vals)
+	}
+
+	return ret
 }
 
 // StringObj implements the Object interface for a string value.
