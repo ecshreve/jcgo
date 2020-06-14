@@ -30,6 +30,8 @@ func ObjectFromInterface(prefix string, input interface{}) Object {
 		return NewStringObj(prefix, vv)
 	case float64:
 		return NewFloatObj(prefix, vv)
+	case bool:
+		return NewBoolObj(prefix, vv)
 	default:
 		return nil
 	}
@@ -197,5 +199,31 @@ func (o FloatObj) Parse() [][]string {
 	return [][]string{
 		[]string{o.Prefix},
 		[]string{stringVal},
+	}
+}
+
+// BoolObj implements the Object interface for a float value.
+type BoolObj struct {
+	Prefix string
+	Val    bool
+}
+
+// NewBoolObj returns a BoolObj for the given input bool.
+func NewBoolObj(prefix string, input bool) *BoolObj {
+	return &BoolObj{
+		Prefix: prefix,
+		Val:    input,
+	}
+}
+
+func (o BoolObj) getPrefix() string {
+	return o.Prefix
+}
+
+// Parse returns the 2d slice of strings for the given BoolObj.
+func (o BoolObj) Parse() [][]string {
+	return [][]string{
+		[]string{o.Prefix},
+		[]string{strconv.FormatBool(o.Val)},
 	}
 }

@@ -46,6 +46,10 @@ func NewObjectTestData() *ObjectTestData {
 				Prefix: "key3",
 				Val:    float64(5.5),
 			},
+			&parser.BoolObj{
+				Prefix: "key4",
+				Val:    true,
+			},
 		},
 	}
 
