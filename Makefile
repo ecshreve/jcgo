@@ -11,3 +11,6 @@ test:
 
 testv:
 	go test -v github.com/ecshreve/jcgo/...
+
+clean:
+	rm *.csv

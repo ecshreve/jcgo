@@ -1,9 +1,6 @@
 package main
 
 import (
-	"encoding/csv"
-	"encoding/json"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -26,38 +23,8 @@ func main() {
 		log.Fatalf("please provide a .json file")
 	}
 
-	// Open the file.
-	file, err := os.Open(path)
+	err := parser.Convert(path)
 	if err != nil {
 		log.Fatal(err)
-	}
-	log.Printf("successfully opened file %s\n", path)
-	defer file.Close()
-
-	// Read the file into a byte array.
-	byteValue, _ := ioutil.ReadAll(file)
-
-	// Unmarshall the byte array into a map.
-	var result map[string]interface{}
-	json.Unmarshal([]byte(byteValue), &result)
-
-	transformed := parser.Transform(result)
-	parsed := parser.Parse(transformed)
-
-	outfile, err := os.Create("result.csv")
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("successfully created file %s\n", outfile.Name())
-	defer outfile.Close()
-
-	writer := csv.NewWriter(outfile)
-	defer writer.Flush()
-
-	for _, value := range parsed {
-		err := writer.Write(value)
-		if err != nil {
-			log.Fatal("Cannot write to file", err)
-		}
 	}
 }

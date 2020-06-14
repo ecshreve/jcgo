@@ -170,7 +170,8 @@ func TestTransform(t *testing.T) {
 
 	for _, testcase := range testcases {
 		t.Run(testcase.description, func(t *testing.T) {
-			actual := parser.Transform(testcase.input)
+			actual, err := parser.Transform(testcase.input)
+			assert.NoError(t, err)
 			assert.Equal(t, testcase.expected, actual)
 		})
 	}
