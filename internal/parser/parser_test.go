@@ -2,6 +2,7 @@ package parser_test
 
 import (
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -48,6 +49,44 @@ func TestValidateConfig(t *testing.T) {
 			} else {
 				assert.NoError(t, err)
 			}
+		})
+	}
+}
+
+func TestParseArgs(t *testing.T) {
+	testcases := []struct {
+		description    string
+		inputArgs      []string
+		expectedConfig *parser.Config
+		expectedOutput string
+		expectError    bool
+	}{
+		{
+			description: "basic valid args",
+			inputArgs:   []string{"dummy", "--infile=testfile.json"},
+			expectedConfig: &parser.Config{
+				Infile: "testfile.json",
+				Args:   []string{},
+			},
+			expectedOutput: "",
+		},
+		{
+			description:    "invalid command line arg",
+			inputArgs:      []string{"dummy", "--somearg=someval"},
+			expectedConfig: nil,
+			expectedOutput: "flag provided but not defined: -somearg",
+			expectError:    true,
+		},
+	}
+
+	for _, testcase := range testcases {
+		t.Run(testcase.description, func(t *testing.T) {
+			actualConfig, actualOutput, err := parser.ParseArgs(testcase.inputArgs)
+			assert.Equal(t, testcase.expectError, err != nil)
+			assert.Equal(t, testcase.expectedConfig, actualConfig)
+
+			actualOutputPrefix := strings.Split(actualOutput, "\n")[0]
+			assert.Equal(t, testcase.expectedOutput, actualOutputPrefix)
 		})
 	}
 }
