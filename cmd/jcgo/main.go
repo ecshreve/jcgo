@@ -5,11 +5,12 @@ import (
 	"os"
 
 	"github.com/ecshreve/jcgo/internal/parser"
+	"github.com/kr/pretty"
 )
 
 func main() {
+	pretty.Print(os.Args)
 	cfg, output, err := parseArgs(os.Args)
-
 	// Handle any errors that resulted from parsing flags.
 	exitCode, err := handleParseError(output, err)
 	if err != nil {
