@@ -8,7 +8,8 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/ecshreve/jcgo/parser"
-	"github.com/ecshreve/jcgo/parser/testdata"
+	"github.com/ecshreve/jcgo/parser/object"
+	"github.com/ecshreve/jcgo/parser/object/testdata"
 )
 
 func TestTransform(t *testing.T) {
@@ -17,7 +18,7 @@ func TestTransform(t *testing.T) {
 	testcases := []struct {
 		description string
 		input       map[string]interface{}
-		expected    parser.Object
+		expected    object.Object
 		expectError bool
 	}{
 		{
