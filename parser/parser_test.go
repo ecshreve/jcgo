@@ -213,24 +213,23 @@ func TestParse(t *testing.T) {
 				[]string{"val4", "nestedval3", "nestedval4"},
 			},
 		},
-		// {
-		// 	description: "complex map with nested maps and slices",
-		// 	input:       data.ComplexMapObj,
-		// 	expected: [][]string{
-		// 		[]string{"data_key1", "data_nestedmap_nested1", "data_nestedmap_nested2", "data_nestedslice_nestedslicemap1", "data_nestedslice_nestedslicemap2"},
-		// 		[]string{"val1", "nestedval1", "nestedval2", "nestedslicemapval1", "nestedslicemapval2"},
-		// 		[]string{"val1", "nestedval1", "nestedval2", "nestedslicemapval3", "nestedslicemapval4"},
-		// 		[]string{"val4", "nestedval3", "nestedval4", "nestedslicemapval5", "nestedslicemapval6"},
-		// 		[]string{"val4", "nestedval3", "nestedval4", "nestedslicemapval7", "nestedslicemapval8"},
-		// 	},
-		// },
+		{
+			description: "complex map with nested maps and slices",
+			input:       data.ComplexMapObj,
+			expected: [][]string{
+				[]string{"data_key1", "data_nestedmap_nested1", "data_nestedmap_nested2", "data_nestedslice_nestedslicemap1", "data_nestedslice_nestedslicemap2"},
+				[]string{"val1", "nestedval1", "nestedval2", "nestedslicemapval1", "nestedslicemapval2"},
+				[]string{"val1", "nestedval1", "nestedval2", "nestedslicemapval3", "nestedslicemapval4"},
+				[]string{"val4", "nestedval3", "nestedval4", "nestedslicemapval5", "nestedslicemapval6"},
+				[]string{"val4", "nestedval3", "nestedval4", "nestedslicemapval7", "nestedslicemapval8"},
+			},
+		},
 	}
 
 	for _, testcase := range testcases {
 		t.Run(testcase.description, func(t *testing.T) {
 			actual := testcase.input.Parse()
 			assert.Equal(t, testcase.expected, actual)
-			spew.Dump(testcase.input)
 			pretty.Print(actual)
 		})
 	}

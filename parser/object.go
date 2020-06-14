@@ -3,8 +3,6 @@ package parser
 import (
 	"fmt"
 	"sort"
-
-	"github.com/kr/pretty"
 )
 
 // Object is representation of a JSON object.
@@ -68,10 +66,9 @@ func (o SliceObj) Parse() [][]string {
 			ret = append(ret, parsed[0])
 		}
 
-		ret = append(ret, parsed[1])
+		ret = append(ret, parsed[1:]...)
 	}
 
-	pretty.Print(ret)
 	return ret
 }
 
@@ -109,27 +106,31 @@ func (o MapObj) getPrefix() string {
 
 // Parse returns the 2d slice of strings for the given MapObj.
 func (o MapObj) Parse() [][]string {
-	var keys []string
-	var vals []string
 	var ret [][]string
 
 	for _, item := range o.Val {
 		parsed := item.Parse()
 
-		if len(parsed) > 2 {
-			if ret == nil {
-				ret = append(ret, parsed[0])
-				ret = append(ret, parsed[1:]...)
+		if ret == nil {
+			ret = parsed
+			continue
+		}
+
+		ret[0] = append(ret[0], parsed[0]...)
+
+		if len(parsed) == 2 {
+			for i := 1; i < len(ret); i++ {
+				ret[i] = append(ret[i], parsed[1]...)
 			}
 		} else {
-			keys = append(keys, parsed[0]...)
-			vals = append(vals, parsed[1]...)
+			lastRow := ret[len(ret)-1]
+			for i := 1; i < len(parsed)-1; i++ {
+				ret = append(ret, lastRow)
+			}
+			for i := 1; i < len(ret); i++ {
+				ret[i] = append(ret[i], parsed[i]...)
+			}
 		}
-	}
-
-	if ret == nil {
-		ret = append(ret, keys)
-		ret = append(ret, vals)
 	}
 
 	return ret
