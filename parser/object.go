@@ -3,6 +3,7 @@ package parser
 import (
 	"fmt"
 	"sort"
+	"strconv"
 )
 
 // Object is representation of a JSON object.
@@ -27,6 +28,8 @@ func ObjectFromInterface(prefix string, input interface{}) Object {
 		return NewSliceObj(prefix, vv)
 	case string:
 		return NewStringObj(prefix, vv)
+	case float64:
+		return NewFloatObj(prefix, vv)
 	default:
 		return nil
 	}
@@ -159,5 +162,40 @@ func (o StringObj) Parse() [][]string {
 	return [][]string{
 		[]string{o.Prefix},
 		[]string{o.Val},
+	}
+}
+
+// FloatObj implements the Object interface for a float value.
+type FloatObj struct {
+	Prefix string
+	Val    float64
+}
+
+// NewFloatObj returns a FloatObj for the given input float.
+func NewFloatObj(prefix string, input float64) *FloatObj {
+	return &FloatObj{
+		Prefix: prefix,
+		Val:    input,
+	}
+}
+
+func (o FloatObj) getPrefix() string {
+	return o.Prefix
+}
+
+// Parse returns the 2d slice of strings for the given FloatObj.
+func (o FloatObj) Parse() [][]string {
+	floatVal := o.Val
+
+	var stringVal string
+	if float64(int64(floatVal)) == floatVal {
+		stringVal = strconv.FormatInt(int64(floatVal), 10)
+	} else {
+		stringVal = strconv.FormatFloat(floatVal, 'f', -1, 64)
+	}
+
+	return [][]string{
+		[]string{o.Prefix},
+		[]string{stringVal},
 	}
 }

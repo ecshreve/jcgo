@@ -32,6 +32,15 @@ func TestTransform(t *testing.T) {
 			expected: data.SimpleMapObj,
 		},
 		{
+			description: "simple map with all possible data types",
+			input: map[string]interface{}{
+				"key1": "val1",
+				"key2": float64(5),
+				"key3": float64(5.5),
+			},
+			expected: data.SimpleAllTypesMapObj,
+		},
+		{
 			description: "simple nested map",
 			input: map[string]interface{}{
 				"outer1": map[string]interface{}{
@@ -144,7 +153,6 @@ func TestTransform(t *testing.T) {
 		t.Run(testcase.description, func(t *testing.T) {
 			actual := parser.Transform(testcase.input)
 			assert.Equal(t, testcase.expected, actual)
-			spew.Dump(actual)
 		})
 	}
 }
@@ -177,6 +185,14 @@ func TestParse(t *testing.T) {
 			expected: [][]string{
 				[]string{"key1", "key2", "key3"},
 				[]string{"val1", "val2", "val3"},
+			},
+		},
+		{
+			description: "simple map with all possible data types",
+			input:       data.SimpleAllTypesMapObj,
+			expected: [][]string{
+				[]string{"key1", "key2", "key3"},
+				[]string{"val1", "5", "5.5"},
 			},
 		},
 		{
