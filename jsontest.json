@@ -1,0 +1,334 @@
+{
+  "data": {
+    "organization": {
+      "groups": [
+        {
+          "dispatchRoute": {
+            "auditLogs": [
+              {
+                "afterState": [
+                  {
+                    "arrivedAt": 0,
+                    "departureTimeMs": 0,
+                    "destinationName": "CARI307",
+                    "enRouteAt": 0,
+                    "id": 4337769816,
+                    "jobState": 4,
+                    "skippedAt": 1591056540000
+                  },
+                  {
+                    "arrivedAt": 1591034132029,
+                    "departureTimeMs": 1591034209011,
+                    "destinationName": "JASON077",
+                    "enRouteAt": 1591032175030,
+                    "id": 4337769817,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591010022020,
+                    "departureTimeMs": 1591010094075,
+                    "destinationName": "TRIANGLE",
+                    "enRouteAt": 1591008549019,
+                    "id": 4337769818,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591017912020,
+                    "departureTimeMs": 1591018664024,
+                    "destinationName": "CHEESDUR",
+                    "enRouteAt": 1591016792087,
+                    "id": 4337769819,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591012033029,
+                    "departureTimeMs": 1591013116025,
+                    "destinationName": "JASON068",
+                    "enRouteAt": 1591010094075,
+                    "id": 4337769820,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591013700033,
+                    "departureTimeMs": 1591016792087,
+                    "destinationName": "EDIBDURH",
+                    "enRouteAt": 1591013116025,
+                    "id": 4337769821,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591018714016,
+                    "departureTimeMs": 1591019785023,
+                    "destinationName": "TEDMODU",
+                    "enRouteAt": 1591018664024,
+                    "id": 4337769822,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 0,
+                    "departureTimeMs": 0,
+                    "destinationName": "WCPSS542",
+                    "enRouteAt": 0,
+                    "id": 4337769823,
+                    "jobState": 4,
+                    "skippedAt": 1591056540000
+                  },
+                  {
+                    "arrivedAt": 1591022205040,
+                    "departureTimeMs": 1591022969048,
+                    "destinationName": "WCPSS364",
+                    "enRouteAt": 1591019785023,
+                    "id": 4337769824,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591023154019,
+                    "departureTimeMs": 1591023637020,
+                    "destinationName": "WCPSS340",
+                    "enRouteAt": 1591022969048,
+                    "id": 4337769825,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591024345017,
+                    "departureTimeMs": 1591025419017,
+                    "destinationName": "LONHOAPX",
+                    "enRouteAt": 1591023637020,
+                    "id": 4337769826,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591026252022,
+                    "departureTimeMs": 1591028056026,
+                    "destinationName": "OLIV4441",
+                    "enRouteAt": 1591025419017,
+                    "id": 4337769827,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591028222035,
+                    "departureTimeMs": 1591028644030,
+                    "destinationName": "WCPSS447",
+                    "enRouteAt": 1591028056026,
+                    "id": 4337769828,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 0,
+                    "departureTimeMs": 0,
+                    "destinationName": "WCPSS428",
+                    "enRouteAt": 0,
+                    "id": 4337769829,
+                    "jobState": 4,
+                    "skippedAt": 1591056540000
+                  },
+                  {
+                    "arrivedAt": 1591031147078,
+                    "departureTimeMs": 1591032175030,
+                    "destinationName": "WCPSS476",
+                    "enRouteAt": 1591028644030,
+                    "id": 4337769830,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591007383026,
+                    "departureTimeMs": 1591008549019,
+                    "destinationName": "LONHOBC",
+                    "enRouteAt": 1591006225022,
+                    "id": 4337769831,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591035298069,
+                    "departureTimeMs": 1591035298069,
+                    "destinationName": "RAL",
+                    "enRouteAt": 1591034209011,
+                    "id": 4337769832,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  }
+                ],
+                "beforeState": [
+                  {
+                    "arrivedAt": 0,
+                    "departureTimeMs": 0,
+                    "destinationName": "CARI307",
+                    "enRouteAt": 0,
+                    "id": 4337769816,
+                    "jobState": 4,
+                    "skippedAt": 1591007383026
+                  },
+                  {
+                    "arrivedAt": 1591034132029,
+                    "departureTimeMs": 1591034209011,
+                    "destinationName": "JASON077",
+                    "enRouteAt": 1591032175030,
+                    "id": 4337769817,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591010022020,
+                    "departureTimeMs": 1591010094075,
+                    "destinationName": "TRIANGLE",
+                    "enRouteAt": 1591008549019,
+                    "id": 4337769818,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591017912020,
+                    "departureTimeMs": 1591018664024,
+                    "destinationName": "CHEESDUR",
+                    "enRouteAt": 1591016792087,
+                    "id": 4337769819,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591012033029,
+                    "departureTimeMs": 1591013116025,
+                    "destinationName": "JASON068",
+                    "enRouteAt": 1591010094075,
+                    "id": 4337769820,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591013700033,
+                    "departureTimeMs": 1591016792087,
+                    "destinationName": "EDIBDURH",
+                    "enRouteAt": 1591013116025,
+                    "id": 4337769821,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591018714016,
+                    "departureTimeMs": 1591019785023,
+                    "destinationName": "TEDMODU",
+                    "enRouteAt": 1591018664024,
+                    "id": 4337769822,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 0,
+                    "departureTimeMs": 0,
+                    "destinationName": "WCPSS542",
+                    "enRouteAt": 0,
+                    "id": 4337769823,
+                    "jobState": 4,
+                    "skippedAt": 1591007383026
+                  },
+                  {
+                    "arrivedAt": 1591022205040,
+                    "departureTimeMs": 1591022969048,
+                    "destinationName": "WCPSS364",
+                    "enRouteAt": 1591019785023,
+                    "id": 4337769824,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591023154019,
+                    "departureTimeMs": 1591023637020,
+                    "destinationName": "WCPSS340",
+                    "enRouteAt": 1591022969048,
+                    "id": 4337769825,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591024345017,
+                    "departureTimeMs": 1591025419017,
+                    "destinationName": "LONHOAPX",
+                    "enRouteAt": 1591023637020,
+                    "id": 4337769826,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591026252022,
+                    "departureTimeMs": 1591028056026,
+                    "destinationName": "OLIV4441",
+                    "enRouteAt": 1591025419017,
+                    "id": 4337769827,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591028222035,
+                    "departureTimeMs": 1591028644030,
+                    "destinationName": "WCPSS447",
+                    "enRouteAt": 1591028056026,
+                    "id": 4337769828,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 0,
+                    "departureTimeMs": 0,
+                    "destinationName": "WCPSS428",
+                    "enRouteAt": 0,
+                    "id": 4337769829,
+                    "jobState": 4,
+                    "skippedAt": 1591007383026
+                  },
+                  {
+                    "arrivedAt": 1591031147078,
+                    "departureTimeMs": 1591032175030,
+                    "destinationName": "WCPSS476",
+                    "enRouteAt": 1591028644030,
+                    "id": 4337769830,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591007383026,
+                    "departureTimeMs": 1591008549019,
+                    "destinationName": "LONHOBC",
+                    "enRouteAt": 1591006225022,
+                    "id": 4337769831,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  },
+                  {
+                    "arrivedAt": 1591035298069,
+                    "departureTimeMs": 1591035298069,
+                    "destinationName": "RAL",
+                    "enRouteAt": 1591034209011,
+                    "id": 4337769832,
+                    "jobState": 3,
+                    "skippedAt": 0
+                  }
+                ],
+                "changedAtMs": 1591056576414,
+                "events": [
+                  {
+                    "eventAt": 1591056576414,
+                    "eventType": 0
+                  }
+                ],
+                "id": 4333023554
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
