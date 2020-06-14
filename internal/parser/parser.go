@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/samsarahq/go/oops"
@@ -12,6 +13,25 @@ import (
 	"github.com/ecshreve/jcgo/internal/helpers"
 	oo "github.com/ecshreve/jcgo/internal/object"
 )
+
+type Config struct {
+	Infile string
+
+	Args []string
+}
+
+func (cfg *Config) Validate() error {
+	if len(cfg.Infile) == 0 {
+		return oops.Errorf("please provide a file with the --infile flag")
+	}
+
+	ext := filepath.Ext(cfg.Infile)
+	if ext != ".json" {
+		return oops.Errorf("infile mush be a .json file -- infile: %s", cfg.Infile)
+	}
+
+	return nil
+}
 
 // ReadJSONFile reads the JSON file at the given path into a map, returns an
 // error if unsuccessful.

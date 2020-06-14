@@ -1,29 +1,64 @@
 package main
 
 import (
+	"bytes"
+	"flag"
 	"log"
 	"os"
-	"path/filepath"
 
 	"github.com/ecshreve/jcgo/internal/parser"
+	"github.com/samsarahq/go/oops"
 )
 
+func parseArgs(args []string) (*parser.Config, string, error) {
+	flags := flag.NewFlagSet(args[0], flag.ContinueOnError)
+
+	var buf bytes.Buffer
+	flags.SetOutput(&buf)
+
+	var cfg parser.Config
+	flags.StringVar(&cfg.Infile, "infile", "", "specify input file")
+
+	err := flags.Parse(args[1:])
+	if err != nil {
+		return nil, buf.String(), err
+	}
+
+	cfg.Args = flags.Args()
+	return &cfg, buf.String(), nil
+}
+
+func handleParseError(output string, err error) (int, error) {
+	if err == flag.ErrHelp {
+		log.Println(output)
+		return 2, nil
+	}
+
+	if err != nil {
+		return 1, oops.Wrapf(err, "unable to parse flags -- %s", output)
+	}
+
+	return 0, nil
+}
+
 func main() {
-	args := os.Args
+	cfg, output, err := parseArgs(os.Args)
 
-	// Require an argument.
-	if len(args) <= 1 {
-		log.Fatalf("please provide a file")
+	// Handle any errors that resulted from parsing flags.
+	exitCode, err := handleParseError(output, err)
+	if err != nil {
+		log.Print(err)
+		os.Exit(exitCode)
 	}
 
-	// Require that argument is a path to a .json file.
-	path := args[1]
-	ext := filepath.Ext(path)
-	if ext != ".json" {
-		log.Fatalf("please provide a .json file")
+	// Validate the parser.Config that results from parsing flags.
+	err = cfg.Validate()
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	file, err := parser.Convert(path)
+	// Convert the JSON file to a CSV file.
+	file, err := parser.Convert(cfg.Infile)
 	if err != nil {
 		log.Fatal(err)
 	}
