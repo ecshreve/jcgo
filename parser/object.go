@@ -23,11 +23,42 @@ func ObjectFromInterface(prefix string, input interface{}) Object {
 	switch vv := input.(type) {
 	case map[string]interface{}:
 		return NewMapObj(prefix, vv)
+	case []interface{}:
+		return NewSliceObj(prefix, vv)
 	case string:
 		return NewStringObj(prefix, vv)
 	default:
 		return nil
 	}
+}
+
+type SliceObj struct {
+	Prefix string
+	Val    []Object
+}
+
+// NewSliceObj returns a SliceObj for the given input slice.
+func NewSliceObj(prefix string, input []interface{}) *SliceObj {
+	var vals []Object
+
+	for _, v := range input {
+		vals = append(vals, ObjectFromInterface(prefix, v))
+	}
+
+	sort.Sort(ByPrefix(vals))
+
+	return &SliceObj{
+		Prefix: prefix,
+		Val:    vals,
+	}
+}
+
+func (o SliceObj) getPrefix() string {
+	return o.Prefix
+}
+
+func (o SliceObj) Parse() [][]string {
+	return nil
 }
 
 // MapObj implements the Object interface for a JSON map.
