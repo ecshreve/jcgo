@@ -22,20 +22,20 @@ func (objs ByPrefix) Less(i, j int) bool { return objs[i].getPrefix() < objs[j].
 func (objs ByPrefix) Swap(i, j int)      { objs[i], objs[j] = objs[j], objs[i] }
 
 // ObjectFromInterface returns an Object for the given input interface{}.
-func ObjectFromInterface(prefix string, input interface{}) Object {
+func ObjectFromInterface(prefix string, input interface{}) (Object, error) {
 	switch vv := input.(type) {
 	case string:
-		return NewStringObj(prefix, vv)
+		return NewStringObj(prefix, vv), nil
 	case bool:
-		return NewBoolObj(prefix, vv)
+		return NewBoolObj(prefix, vv), nil
 	case float64:
-		return NewFloatObj(prefix, vv)
+		return NewFloatObj(prefix, vv), nil
 	case map[string]interface{}:
-		return NewMapObj(prefix, vv)
+		return NewMapObj(prefix, vv), nil
 	case []interface{}:
-		return NewSliceObj(prefix, vv)
+		return NewSliceObj(prefix, vv), nil
 	default:
-		return nil
+		return nil, oops.Errorf("unable to create Object from interface: %+v", input)
 	}
 }
 
@@ -143,7 +143,8 @@ func NewMapObj(prefix string, input map[string]interface{}) *MapObj {
 
 	for k, v := range input {
 		newPrefix := fmt.Sprintf("%s%s%s", prefix, connector, k)
-		vals = append(vals, ObjectFromInterface(newPrefix, v))
+		obj, _ := ObjectFromInterface(newPrefix, v)
+		vals = append(vals, obj)
 	}
 
 	sort.Sort(ByPrefix(vals))
@@ -204,7 +205,8 @@ func NewSliceObj(prefix string, input []interface{}) *SliceObj {
 	var vals []Object
 
 	for _, v := range input {
-		vals = append(vals, ObjectFromInterface(prefix, v))
+		obj, _ := ObjectFromInterface(prefix, v)
+		vals = append(vals, obj)
 	}
 
 	sort.Sort(ByPrefix(vals))

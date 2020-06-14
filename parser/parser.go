@@ -8,7 +8,7 @@ import (
 // on the root map[string]interface{} that comes from Unmarshalling a JSON file
 // into a map[string]interface{}.
 func Transform(input map[string]interface{}) Object {
-	o := ObjectFromInterface("", input)
+	o, _ := ObjectFromInterface("", input)
 	return o
 }
 
