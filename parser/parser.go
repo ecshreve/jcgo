@@ -2,8 +2,6 @@ package parser
 
 import (
 	"fmt"
-
-	"github.com/kr/pretty"
 )
 
 // Transform returns an Object for the given input map. It's meant to be called
@@ -14,10 +12,10 @@ func Transform(input map[string]interface{}) Object {
 	return o
 }
 
-func Parse(o Object) {
+func Parse(o Object) [][]string {
 	parsed, err := o.Parse()
 	if err != nil {
 		fmt.Print(err)
 	}
-	pretty.Print(parsed)
+	return parsed
 }
