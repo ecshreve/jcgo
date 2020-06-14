@@ -21,7 +21,8 @@ func (objs ByPrefix) Len() int           { return len(objs) }
 func (objs ByPrefix) Less(i, j int) bool { return objs[i].getPrefix() < objs[j].getPrefix() }
 func (objs ByPrefix) Swap(i, j int)      { objs[i], objs[j] = objs[j], objs[i] }
 
-// ObjectFromInterface returns an Object for the given input interface{}.
+// ObjectFromInterface returns an Object for the given input interface{}, or an
+// error if the interface is of an invalid type.
 func ObjectFromInterface(prefix string, input interface{}) (Object, error) {
 	switch vv := input.(type) {
 	case string:
@@ -31,9 +32,17 @@ func ObjectFromInterface(prefix string, input interface{}) (Object, error) {
 	case float64:
 		return NewFloatObj(prefix, vv), nil
 	case map[string]interface{}:
-		return NewMapObj(prefix, vv), nil
+		obj, err := NewMapObj(prefix, vv)
+		if err != nil {
+			return nil, oops.Wrapf(err, "unable to create MapObj for interface: %+v", vv)
+		}
+		return obj, nil
 	case []interface{}:
-		return NewSliceObj(prefix, vv), nil
+		obj, err := NewSliceObj(prefix, vv)
+		if err != nil {
+			return nil, oops.Wrapf(err, "unable to create SliceObj for interface: %+v", vv)
+		}
+		return obj, nil
 	default:
 		return nil, oops.Errorf("unable to create Object from interface: %+v", input)
 	}
@@ -65,7 +74,7 @@ func (o StringObj) Parse() ([][]string, error) {
 	}, nil
 }
 
-// BoolObj implements the Object interface for a float value.
+// BoolObj implements the Object interface for a bool value.
 type BoolObj struct {
 	Prefix string
 	Val    bool
@@ -133,7 +142,7 @@ type MapObj struct {
 }
 
 // NewMapObj returns a MapObj for the given input map.
-func NewMapObj(prefix string, input map[string]interface{}) *MapObj {
+func NewMapObj(prefix string, input map[string]interface{}) (*MapObj, error) {
 	var vals []Object
 	connector := ""
 
@@ -143,7 +152,10 @@ func NewMapObj(prefix string, input map[string]interface{}) *MapObj {
 
 	for k, v := range input {
 		newPrefix := fmt.Sprintf("%s%s%s", prefix, connector, k)
-		obj, _ := ObjectFromInterface(newPrefix, v)
+		obj, err := ObjectFromInterface(newPrefix, v)
+		if err != nil {
+			return nil, oops.Wrapf(err, "unable to create MapObj")
+		}
 		vals = append(vals, obj)
 	}
 
@@ -152,7 +164,7 @@ func NewMapObj(prefix string, input map[string]interface{}) *MapObj {
 	return &MapObj{
 		Prefix: prefix,
 		Val:    vals,
-	}
+	}, nil
 }
 
 func (o MapObj) getPrefix() string {
@@ -169,12 +181,18 @@ func (o MapObj) Parse() ([][]string, error) {
 			return nil, oops.Wrapf(err, "unable to parse item: %+v", item)
 		}
 
+		// If this is the first item we've parsed then we can initialize ret
+		// to that value and skip to parsing the next item.
 		if ret == nil {
 			ret = parsed
 			continue
 		}
 
+		// Update the first row in ret with the new keys from the parsed value.
 		ret[0] = append(ret[0], parsed[0]...)
+
+		// If the parsed item is a simple scalar value, then set it for each
+		// existing row in ret and skip to parsing the next item.
 		if len(parsed) == 2 {
 			for i := 1; i < len(ret); i++ {
 				ret[i] = append(ret[i], parsed[1]...)
@@ -182,6 +200,8 @@ func (o MapObj) Parse() ([][]string, error) {
 			continue
 		}
 
+		// If the parsed item is not a simple scalar then update each existing
+		// row, and add additional rows as needed.
 		lastRow := ret[len(ret)-1]
 		for i := 1; i < len(parsed); i++ {
 			if i == len(ret) {
@@ -201,20 +221,24 @@ type SliceObj struct {
 }
 
 // NewSliceObj returns a SliceObj for the given input slice.
-func NewSliceObj(prefix string, input []interface{}) *SliceObj {
+func NewSliceObj(prefix string, input []interface{}) (*SliceObj, error) {
 	var vals []Object
 
 	for _, v := range input {
-		obj, _ := ObjectFromInterface(prefix, v)
+		obj, err := ObjectFromInterface(prefix, v)
+		if err != nil {
+			return nil, oops.Wrapf(err, "unable to create SliceObj")
+		}
+
 		vals = append(vals, obj)
 	}
 
+	// Sort the Objects in the SliceObj by their Prefix and return.
 	sort.Sort(ByPrefix(vals))
-
 	return &SliceObj{
 		Prefix: prefix,
 		Val:    vals,
-	}
+	}, nil
 }
 
 func (o SliceObj) getPrefix() string {
@@ -231,7 +255,9 @@ func (o SliceObj) Parse() ([][]string, error) {
 			return nil, oops.Wrapf(err, "unable to parse item: %+v", item)
 		}
 
-		if len(ret) == 0 {
+		// If this is the first item we've parsed then set the first row in ret
+		// to the first row in the parsed result.
+		if ret == nil {
 			ret = append(ret, parsed[0])
 		}
 
