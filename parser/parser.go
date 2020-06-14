@@ -4,7 +4,6 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"os"
 
 	"github.com/samsarahq/go/oops"
@@ -15,45 +14,48 @@ import (
 func ReadJSONFile(path string) (map[string]interface{}, error) {
 	file, err := os.Open(path)
 	if err != nil {
-		log.Fatal(err)
+		return nil, oops.Wrapf(err, "unable to open file %s", path)
 	}
-	log.Printf("successfully opened file %s\n", path)
 	defer file.Close()
 
 	// Read the file into a byte array.
-	byteValue, _ := ioutil.ReadAll(file)
+	byteValue, err := ioutil.ReadAll(file)
+	if err != nil {
+		return nil, oops.Wrapf(err, "unable to read file %s to byte array", file.Name())
+	}
 
 	// Unmarshall the byte array into a map.
 	var result map[string]interface{}
-	json.Unmarshal([]byte(byteValue), &result)
+	err = json.Unmarshal([]byte(byteValue), &result)
+	if err != nil {
+		return nil, oops.Wrapf(err, "unable to unmarshal byte array to map")
+	}
 
 	return result, nil
 }
 
 // WriteCSVFile writes the given data to a CSV file at the given path, returns
 // an error if unsuccessful.
-func WriteCSVFile(data [][]string, path string) error {
-	outfile, err := os.Create(path)
+func WriteCSVFile(data [][]string, path string) (*os.File, error) {
+	file, err := os.Create(path)
 	if err != nil {
-		return oops.Wrapf(err, "unable to create ouput file")
+		return nil, oops.Wrapf(err, "unable to create ouput file")
 	}
-
-	log.Printf("successfully created file %s\n", outfile.Name())
-	defer outfile.Close()
+	defer file.Close()
 
 	// Create a CSV writer.
-	writer := csv.NewWriter(outfile)
+	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
 	// Write each row in our data to the CSV file.
 	for _, value := range data {
 		err := writer.Write(value)
 		if err != nil {
-			return oops.Wrapf(err, "unable to value: %+v to file: %s", value, outfile.Name())
+			return nil, oops.Wrapf(err, "unable to value: %+v to file: %s", value, file.Name())
 		}
 	}
 
-	return nil
+	return file, nil
 }
 
 // Transform returns an Object for the given input map. It's meant to be called
@@ -90,7 +92,7 @@ func Convert(path string) error {
 	}
 
 	// Write the parsed data to CSV file.
-	err = WriteCSVFile(parsed, "result.csv")
+	_, err = WriteCSVFile(parsed, "result.csv")
 	if err != nil {
 		return oops.Wrapf(err, "unable to write to csv file")
 	}
