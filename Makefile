@@ -15,3 +15,6 @@ test:
 testv:
 	go test -v github.com/ecshreve/jcgo/...
 
+testc:
+	go test -cover github.com/ecshreve/jcgo/...
+
