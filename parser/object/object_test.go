@@ -1,4 +1,4 @@
-package parser_test
+package object_test
 
 import (
 	"testing"
@@ -6,8 +6,8 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ecshreve/jcgo/parser"
-	"github.com/ecshreve/jcgo/parser/testdata"
+	oo "github.com/ecshreve/jcgo/parser/object"
+	"github.com/ecshreve/jcgo/parser/object/testdata"
 )
 
 func TestObjectCreation(t *testing.T) {
@@ -60,7 +60,7 @@ func TestObjectCreation(t *testing.T) {
 
 	for _, testcase := range testcases {
 		t.Run(testcase.description, func(t *testing.T) {
-			_, err := parser.ObjectFromInterface("", testcase.input)
+			_, err := oo.ObjectFromInterface("", testcase.input)
 			assert.Equal(t, testcase.expectError, err != nil)
 		})
 	}
@@ -74,12 +74,12 @@ func TestParseObject(t *testing.T) {
 
 	testcases := []struct {
 		description string
-		input       parser.Object
+		input       oo.Object
 		expected    [][]string
 	}{
 		{
 			description: "simple string",
-			input: &parser.StringObj{
+			input: &oo.StringObj{
 				Prefix: "key1",
 				Val:    "val1",
 			},

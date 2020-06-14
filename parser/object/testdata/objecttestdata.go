@@ -1,99 +1,99 @@
 package testdata
 
-import "github.com/ecshreve/jcgo/parser"
+import "github.com/ecshreve/jcgo/parser/object"
 
 type ObjectTestData struct {
-	SimpleMapObj            *parser.MapObj
-	SimpleAllTypesMapObj    *parser.MapObj
-	SimpleNestedMapObj      *parser.MapObj
-	DoubleNestedMapObj      *parser.MapObj
-	SimpleSliceMapObj       *parser.MapObj
-	SimpleSliceNestedMapObj *parser.MapObj
-	ComplexMapObj           *parser.MapObj
+	SimpleMapObj            *object.MapObj
+	SimpleAllTypesMapObj    *object.MapObj
+	SimpleNestedMapObj      *object.MapObj
+	DoubleNestedMapObj      *object.MapObj
+	SimpleSliceMapObj       *object.MapObj
+	SimpleSliceNestedMapObj *object.MapObj
+	ComplexMapObj           *object.MapObj
 }
 
 func NewObjectTestData() *ObjectTestData {
-	simpleMapObj := &parser.MapObj{
+	simpleMapObj := &object.MapObj{
 		Prefix: "",
-		Val: []parser.Object{
-			&parser.StringObj{
+		Val: []object.Object{
+			&object.StringObj{
 				Prefix: "key1",
 				Val:    "val1",
 			},
-			&parser.StringObj{
+			&object.StringObj{
 				Prefix: "key2",
 				Val:    "val2",
 			},
-			&parser.StringObj{
+			&object.StringObj{
 				Prefix: "key3",
 				Val:    "val3",
 			},
 		},
 	}
 
-	simpleAllTypesMapObj := &parser.MapObj{
+	simpleAllTypesMapObj := &object.MapObj{
 		Prefix: "",
-		Val: []parser.Object{
-			&parser.StringObj{
+		Val: []object.Object{
+			&object.StringObj{
 				Prefix: "key1",
 				Val:    "val1",
 			},
-			&parser.FloatObj{
+			&object.FloatObj{
 				Prefix: "key2",
 				Val:    float64(5),
 			},
-			&parser.FloatObj{
+			&object.FloatObj{
 				Prefix: "key3",
 				Val:    float64(5.5),
 			},
-			&parser.BoolObj{
+			&object.BoolObj{
 				Prefix: "key4",
 				Val:    true,
 			},
 		},
 	}
 
-	simpleNestedMapObj := &parser.MapObj{
+	simpleNestedMapObj := &object.MapObj{
 		Prefix: "",
-		Val: []parser.Object{
-			&parser.MapObj{
+		Val: []object.Object{
+			&object.MapObj{
 				Prefix: "outer1",
-				Val: []parser.Object{
-					&parser.StringObj{
+				Val: []object.Object{
+					&object.StringObj{
 						Prefix: "outer1_inner1",
 						Val:    "innerval1",
 					},
-					&parser.StringObj{
+					&object.StringObj{
 						Prefix: "outer1_inner2",
 						Val:    "innerval2",
 					},
 				},
 			},
-			&parser.StringObj{
+			&object.StringObj{
 				Prefix: "outer2",
 				Val:    "outerval2",
 			},
 		},
 	}
 
-	doubleNestedMapObj := &parser.MapObj{
+	doubleNestedMapObj := &object.MapObj{
 		Prefix: "",
-		Val: []parser.Object{
-			&parser.MapObj{
+		Val: []object.Object{
+			&object.MapObj{
 				Prefix: "outer1",
-				Val: []parser.Object{
-					&parser.StringObj{
+				Val: []object.Object{
+					&object.StringObj{
 						Prefix: "outer1_inner1",
 						Val:    "innerval1",
 					},
-					&parser.MapObj{
+					&object.MapObj{
 						Prefix: "outer1_nestedmap",
-						Val: []parser.Object{
-							&parser.StringObj{
+						Val: []object.Object{
+							&object.StringObj{
 								Prefix: "outer1_nestedmap_nested1",
 								Val:    "nestedval1",
 							},
-							&parser.StringObj{
+							&object.StringObj{
 								Prefix: "outer1_nestedmap_nested2",
 								Val:    "nestedval2",
 							},
@@ -101,48 +101,48 @@ func NewObjectTestData() *ObjectTestData {
 					},
 				},
 			},
-			&parser.StringObj{
+			&object.StringObj{
 				Prefix: "outer2",
 				Val:    "outerval2",
 			},
 		},
 	}
 
-	simpleSliceMapObj := &parser.MapObj{
+	simpleSliceMapObj := &object.MapObj{
 		Prefix: "",
-		Val: []parser.Object{
-			&parser.SliceObj{
+		Val: []object.Object{
+			&object.SliceObj{
 				Prefix: "data",
-				Val: []parser.Object{
-					&parser.MapObj{
+				Val: []object.Object{
+					&object.MapObj{
 						Prefix: "data",
-						Val: []parser.Object{
-							&parser.StringObj{
+						Val: []object.Object{
+							&object.StringObj{
 								Prefix: "data_key1",
 								Val:    "val1",
 							},
-							&parser.StringObj{
+							&object.StringObj{
 								Prefix: "data_key2",
 								Val:    "val2",
 							},
-							&parser.StringObj{
+							&object.StringObj{
 								Prefix: "data_key3",
 								Val:    "val3",
 							},
 						},
 					},
-					&parser.MapObj{
+					&object.MapObj{
 						Prefix: "data",
-						Val: []parser.Object{
-							&parser.StringObj{
+						Val: []object.Object{
+							&object.StringObj{
 								Prefix: "data_key1",
 								Val:    "val4",
 							},
-							&parser.StringObj{
+							&object.StringObj{
 								Prefix: "data_key2",
 								Val:    "val5",
 							},
-							&parser.StringObj{
+							&object.StringObj{
 								Prefix: "data_key3",
 								Val:    "val6",
 							},
@@ -153,27 +153,27 @@ func NewObjectTestData() *ObjectTestData {
 		},
 	}
 
-	simpleSliceNestedMapObj := &parser.MapObj{
+	simpleSliceNestedMapObj := &object.MapObj{
 		Prefix: "",
-		Val: []parser.Object{
-			&parser.SliceObj{
+		Val: []object.Object{
+			&object.SliceObj{
 				Prefix: "data",
-				Val: []parser.Object{
-					&parser.MapObj{
+				Val: []object.Object{
+					&object.MapObj{
 						Prefix: "data",
-						Val: []parser.Object{
-							&parser.StringObj{
+						Val: []object.Object{
+							&object.StringObj{
 								Prefix: "data_key1",
 								Val:    "val1",
 							},
-							&parser.MapObj{
+							&object.MapObj{
 								Prefix: "data_nestedmap",
-								Val: []parser.Object{
-									&parser.StringObj{
+								Val: []object.Object{
+									&object.StringObj{
 										Prefix: "data_nestedmap_nested1",
 										Val:    "nestedval1",
 									},
-									&parser.StringObj{
+									&object.StringObj{
 										Prefix: "data_nestedmap_nested2",
 										Val:    "nestedval2",
 									},
@@ -181,21 +181,21 @@ func NewObjectTestData() *ObjectTestData {
 							},
 						},
 					},
-					&parser.MapObj{
+					&object.MapObj{
 						Prefix: "data",
-						Val: []parser.Object{
-							&parser.StringObj{
+						Val: []object.Object{
+							&object.StringObj{
 								Prefix: "data_key1",
 								Val:    "val4",
 							},
-							&parser.MapObj{
+							&object.MapObj{
 								Prefix: "data_nestedmap",
-								Val: []parser.Object{
-									&parser.StringObj{
+								Val: []object.Object{
+									&object.StringObj{
 										Prefix: "data_nestedmap_nested1",
 										Val:    "nestedval3",
 									},
-									&parser.StringObj{
+									&object.StringObj{
 										Prefix: "data_nestedmap_nested2",
 										Val:    "nestedval4",
 									},
@@ -208,62 +208,62 @@ func NewObjectTestData() *ObjectTestData {
 		},
 	}
 
-	complexMapObj := &parser.MapObj{
+	complexMapObj := &object.MapObj{
 		Prefix: "",
-		Val: []parser.Object{
-			&parser.SliceObj{
+		Val: []object.Object{
+			&object.SliceObj{
 				Prefix: "data",
-				Val: []parser.Object{
-					&parser.MapObj{
+				Val: []object.Object{
+					&object.MapObj{
 						Prefix: "data",
-						Val: []parser.Object{
-							&parser.StringObj{
+						Val: []object.Object{
+							&object.StringObj{
 								Prefix: "data_key1",
 								Val:    "val1",
 							},
-							&parser.MapObj{
+							&object.MapObj{
 								Prefix: "data_nestedmap",
-								Val: []parser.Object{
-									&parser.StringObj{
+								Val: []object.Object{
+									&object.StringObj{
 										Prefix: "data_nestedmap_nested1",
 										Val:    "nestedval1",
 									},
-									&parser.StringObj{
+									&object.StringObj{
 										Prefix: "data_nestedmap_nested2",
 										Val:    "nestedval2",
 									},
 								},
 							},
-							&parser.SliceObj{
+							&object.SliceObj{
 								Prefix: "data_nestedslice",
-								Val: []parser.Object{
-									&parser.MapObj{
+								Val: []object.Object{
+									&object.MapObj{
 										Prefix: "data_nestedslice",
-										Val: []parser.Object{
-											&parser.SliceObj{
+										Val: []object.Object{
+											&object.SliceObj{
 												Prefix: "data_nestedslice_after",
-												Val: []parser.Object{
-													&parser.MapObj{
+												Val: []object.Object{
+													&object.MapObj{
 														Prefix: "data_nestedslice_after",
-														Val: []parser.Object{
-															&parser.StringObj{
+														Val: []object.Object{
+															&object.StringObj{
 																Prefix: "data_nestedslice_after_nestedslicemap1",
 																Val:    "nestedslicemapval5",
 															},
-															&parser.StringObj{
+															&object.StringObj{
 																Prefix: "data_nestedslice_after_nestedslicemap2",
 																Val:    "nestedslicemapval6",
 															},
 														},
 													},
-													&parser.MapObj{
+													&object.MapObj{
 														Prefix: "data_nestedslice_after",
-														Val: []parser.Object{
-															&parser.StringObj{
+														Val: []object.Object{
+															&object.StringObj{
 																Prefix: "data_nestedslice_after_nestedslicemap1",
 																Val:    "nestedslicemapval7",
 															},
-															&parser.StringObj{
+															&object.StringObj{
 																Prefix: "data_nestedslice_after_nestedslicemap2",
 																Val:    "nestedslicemapval8",
 															},
@@ -271,30 +271,30 @@ func NewObjectTestData() *ObjectTestData {
 													},
 												},
 											},
-											&parser.SliceObj{
+											&object.SliceObj{
 												Prefix: "data_nestedslice_before",
-												Val: []parser.Object{
-													&parser.MapObj{
+												Val: []object.Object{
+													&object.MapObj{
 														Prefix: "data_nestedslice_before",
-														Val: []parser.Object{
-															&parser.StringObj{
+														Val: []object.Object{
+															&object.StringObj{
 																Prefix: "data_nestedslice_before_nestedslicemap1",
 																Val:    "nestedslicemapval1",
 															},
-															&parser.StringObj{
+															&object.StringObj{
 																Prefix: "data_nestedslice_before_nestedslicemap2",
 																Val:    "nestedslicemapval2",
 															},
 														},
 													},
-													&parser.MapObj{
+													&object.MapObj{
 														Prefix: "data_nestedslice_before",
-														Val: []parser.Object{
-															&parser.StringObj{
+														Val: []object.Object{
+															&object.StringObj{
 																Prefix: "data_nestedslice_before_nestedslicemap1",
 																Val:    "nestedslicemapval3",
 															},
-															&parser.StringObj{
+															&object.StringObj{
 																Prefix: "data_nestedslice_before_nestedslicemap2",
 																Val:    "nestedslicemapval4",
 															},
@@ -304,33 +304,33 @@ func NewObjectTestData() *ObjectTestData {
 											},
 										},
 									},
-									&parser.MapObj{
+									&object.MapObj{
 										Prefix: "data_nestedslice",
-										Val: []parser.Object{
-											&parser.SliceObj{
+										Val: []object.Object{
+											&object.SliceObj{
 												Prefix: "data_nestedslice_after",
-												Val: []parser.Object{
-													&parser.MapObj{
+												Val: []object.Object{
+													&object.MapObj{
 														Prefix: "data_nestedslice_after",
-														Val: []parser.Object{
-															&parser.StringObj{
+														Val: []object.Object{
+															&object.StringObj{
 																Prefix: "data_nestedslice_after_nestedslicemap1",
 																Val:    "nestedslicemapval15",
 															},
-															&parser.StringObj{
+															&object.StringObj{
 																Prefix: "data_nestedslice_after_nestedslicemap2",
 																Val:    "nestedslicemapval16",
 															},
 														},
 													},
-													&parser.MapObj{
+													&object.MapObj{
 														Prefix: "data_nestedslice_after",
-														Val: []parser.Object{
-															&parser.StringObj{
+														Val: []object.Object{
+															&object.StringObj{
 																Prefix: "data_nestedslice_after_nestedslicemap1",
 																Val:    "nestedslicemapval17",
 															},
-															&parser.StringObj{
+															&object.StringObj{
 																Prefix: "data_nestedslice_after_nestedslicemap2",
 																Val:    "nestedslicemapval18",
 															},
@@ -338,30 +338,30 @@ func NewObjectTestData() *ObjectTestData {
 													},
 												},
 											},
-											&parser.SliceObj{
+											&object.SliceObj{
 												Prefix: "data_nestedslice_before",
-												Val: []parser.Object{
-													&parser.MapObj{
+												Val: []object.Object{
+													&object.MapObj{
 														Prefix: "data_nestedslice_before",
-														Val: []parser.Object{
-															&parser.StringObj{
+														Val: []object.Object{
+															&object.StringObj{
 																Prefix: "data_nestedslice_before_nestedslicemap1",
 																Val:    "nestedslicemapval11",
 															},
-															&parser.StringObj{
+															&object.StringObj{
 																Prefix: "data_nestedslice_before_nestedslicemap2",
 																Val:    "nestedslicemapval12",
 															},
 														},
 													},
-													&parser.MapObj{
+													&object.MapObj{
 														Prefix: "data_nestedslice_before",
-														Val: []parser.Object{
-															&parser.StringObj{
+														Val: []object.Object{
+															&object.StringObj{
 																Prefix: "data_nestedslice_before_nestedslicemap1",
 																Val:    "nestedslicemapval13",
 															},
-															&parser.StringObj{
+															&object.StringObj{
 																Prefix: "data_nestedslice_before_nestedslicemap2",
 																Val:    "nestedslicemapval14",
 															},
