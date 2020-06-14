@@ -3,7 +3,6 @@ package object_test
 import (
 	"testing"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/stretchr/testify/assert"
 
 	oo "github.com/ecshreve/jcgo/internal/object"
@@ -68,9 +67,6 @@ func TestObjectCreation(t *testing.T) {
 
 func TestParseObject(t *testing.T) {
 	data := testdata.NewObjectTestData()
-	spew.Config.DisablePointerAddresses = true
-	spew.Config.DisableCapacities = true
-	spew.Config.Indent = "  "
 
 	testcases := []struct {
 		description string
