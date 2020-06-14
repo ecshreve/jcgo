@@ -59,7 +59,7 @@ func TestObjectCreation(t *testing.T) {
 
 	for _, testcase := range testcases {
 		t.Run(testcase.description, func(t *testing.T) {
-			_, err := oo.ObjectFromInterface("", testcase.input)
+			_, err := oo.FromInterface("", testcase.input)
 			assert.Equal(t, testcase.expectError, err != nil)
 		})
 	}

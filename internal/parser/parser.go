@@ -64,7 +64,7 @@ func WriteCSVFile(data [][]string, path string) (*os.File, error) {
 // on the root map[string]interface{} that comes from Unmarshalling a JSON file
 // into a map[string]interface{}.
 func Transform(input map[string]interface{}) (oo.Object, error) {
-	obj, err := oo.ObjectFromInterface("", input)
+	obj, err := oo.FromInterface("", input)
 	if err != nil {
 		return nil, oops.Wrapf(err, "unable to get Object from interface")
 	}
