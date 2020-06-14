@@ -11,6 +11,47 @@ import (
 	"github.com/ecshreve/jcgo/internal/testdata"
 )
 
+func TestValidateConfig(t *testing.T) {
+	testcases := []struct {
+		description string
+		input       *parser.Config
+		valid       bool
+	}{
+		{
+			description: "no input file",
+			input: &parser.Config{
+				Infile: "",
+			},
+			valid: false,
+		},
+		{
+			description: "non-json input file",
+			input: &parser.Config{
+				Infile: "testfilename.csv",
+			},
+			valid: false,
+		},
+		{
+			description: "valid input file",
+			input: &parser.Config{
+				Infile: "testfilename.json",
+			},
+			valid: true,
+		},
+	}
+
+	for _, testcase := range testcases {
+		t.Run(testcase.description, func(t *testing.T) {
+			err := testcase.input.Validate()
+			if !testcase.valid {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
+			}
+		})
+	}
+}
+
 func TestTransform(t *testing.T) {
 	data := testdata.NewObjectTestData()
 
