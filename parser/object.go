@@ -172,9 +172,16 @@ func (o MapObj) Parse() ([][]string, error) {
 			ret = parsed
 			continue
 		}
-		lastRow := ret[len(ret)-1]
 
 		ret[0] = append(ret[0], parsed[0]...)
+		if len(parsed) == 2 {
+			for i := 1; i < len(ret); i++ {
+				ret[i] = append(ret[i], parsed[1]...)
+			}
+			continue
+		}
+
+		lastRow := ret[len(ret)-1]
 		for i := 1; i < len(parsed); i++ {
 			if i == len(ret) {
 				ret = append(ret, lastRow)

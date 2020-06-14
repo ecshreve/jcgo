@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -41,5 +42,22 @@ func main() {
 	json.Unmarshal([]byte(byteValue), &result)
 
 	transformed := parser.Transform(result)
-	parser.Parse(transformed)
+	parsed := parser.Parse(transformed)
+
+	outfile, err := os.Create("result.csv")
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("successfully created file %s\n", outfile)
+	defer outfile.Close()
+
+	writer := csv.NewWriter(outfile)
+	defer writer.Flush()
+
+	for _, value := range parsed {
+		err := writer.Write(value)
+		if err != nil {
+			log.Fatal("Cannot write to file", err)
+		}
+	}
 }
