@@ -14,12 +14,18 @@ import (
 	oo "github.com/ecshreve/jcgo/internal/object"
 )
 
+// Config represents various configuration parameters for one JSON to CSV
+// parsing session.
 type Config struct {
 	Infile string
 
 	Args []string
 }
 
+// Validate returns an error if the Config is invalid. A Config can be invalid
+// for the following reasons:
+//  - No input file provided.
+//  - Non-JSON input file provided.
 func (cfg *Config) Validate() error {
 	if len(cfg.Infile) == 0 {
 		return oops.Errorf("please provide a file with the --infile flag")
