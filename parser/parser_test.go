@@ -3,7 +3,6 @@ package parser_test
 import (
 	"testing"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/samsarahq/go/snapshotter"
 	"github.com/stretchr/testify/assert"
 
@@ -13,15 +12,23 @@ import (
 
 func TestTransform(t *testing.T) {
 	data := testdata.NewObjectTestData()
-	spew.Config.DisablePointerAddresses = true
-	spew.Config.DisableCapacities = true
-	spew.Config.Indent = "  "
 
 	testcases := []struct {
 		description string
 		input       map[string]interface{}
 		expected    parser.Object
+		expectError bool
 	}{
+		{
+			description: "invalid input",
+			input: map[string]interface{}{
+				"key1": int64(1),
+				"key2": "val2",
+				"key3": "val3",
+			},
+			expected:    nil,
+			expectError: true,
+		},
 		{
 			description: "simple map",
 			input: map[string]interface{}{
@@ -172,7 +179,7 @@ func TestTransform(t *testing.T) {
 	for _, testcase := range testcases {
 		t.Run(testcase.description, func(t *testing.T) {
 			actual, err := parser.Transform(testcase.input)
-			assert.NoError(t, err)
+			assert.Equal(t, testcase.expectError, err != nil)
 			assert.Equal(t, testcase.expected, actual)
 		})
 	}
