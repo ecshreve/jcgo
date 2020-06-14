@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
+	"strings"
 
 	"github.com/samsarahq/go/oops"
 )
@@ -72,30 +73,36 @@ func Transform(input map[string]interface{}) (Object, error) {
 
 // Convert converts the given json file at the given path to a csv file, or
 // returns an error if unable to convert the file.
-func Convert(path string) error {
+func Convert(path string) (*os.File, error) {
 	// Read the JSON file into a map.
 	raw, err := ReadJSONFile(path)
 	if err != nil {
-		return oops.Wrapf(err, "unable to read json file")
+		return nil, oops.Wrapf(err, "unable to read json file")
 	}
 
 	// Transform the map into an Object.
 	transformed, err := Transform(raw)
 	if err != nil {
-		return oops.Wrapf(err, "unable to convert to Object")
+		return nil, oops.Wrapf(err, "unable to convert to Object")
 	}
 
 	// Parse the Object into a [][]string.
 	parsed, err := transformed.Parse()
 	if err != nil {
-		return oops.Wrapf(err, "unable to parse Object")
+		return nil, oops.Wrapf(err, "unable to parse Object")
 	}
+
+	// Build the path for the output file.
+	splitPath := strings.Split(path, ".")
+	splitPath[len(splitPath)-1] = "output"
+	splitPath = append(splitPath, "csv")
+	outputPath := strings.Join(splitPath, ".")
 
 	// Write the parsed data to CSV file.
-	_, err = WriteCSVFile(parsed, "result.csv")
+	file, err := WriteCSVFile(parsed, outputPath)
 	if err != nil {
-		return oops.Wrapf(err, "unable to write to csv file")
+		return nil, oops.Wrapf(err, "unable to write to csv file")
 	}
 
-	return nil
+	return file, nil
 }

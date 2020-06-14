@@ -23,8 +23,10 @@ func main() {
 		log.Fatalf("please provide a .json file")
 	}
 
-	err := parser.Convert(path)
+	file, err := parser.Convert(path)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	log.Printf("successfully created %s", file.Name())
 }

@@ -1,6 +1,7 @@
 package parser_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/samsarahq/go/snapshotter"
@@ -218,5 +219,12 @@ func TestFileOperations(t *testing.T) {
 	file, err = parser.WriteCSVFile(data, "testdata/nonexistentdirectory/testoutput.xls")
 	assert.Error(t, err)
 	assert.Nil(t, file)
+	os.Remove("testdata/testoutput.csv")
+}
 
+func TestConvert(t *testing.T) {
+	file, err := parser.Convert("testdata/jsontest.json")
+	assert.NoError(t, err)
+	assert.NotNil(t, file)
+	assert.Equal(t, "testdata/jsontest.output.csv", file.Name())
 }
