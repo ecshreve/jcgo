@@ -22,7 +22,7 @@ func TestTransform(t *testing.T) {
 		expected    parser.Object
 	}{
 		{
-			description: "basic map",
+			description: "simple map",
 			input: map[string]interface{}{
 				"key1": "val1",
 				"key2": "val2",
@@ -31,7 +31,7 @@ func TestTransform(t *testing.T) {
 			expected: data.SimpleMapObj,
 		},
 		{
-			description: "basic nested map",
+			description: "simple nested map",
 			input: map[string]interface{}{
 				"outer1": map[string]interface{}{
 					"inner1": "innerval1",
@@ -42,7 +42,7 @@ func TestTransform(t *testing.T) {
 			expected: data.SimpleNestedMapObj,
 		},
 		{
-			description: "basic double nested map",
+			description: "double nested map",
 			input: map[string]interface{}{
 				"outer1": map[string]interface{}{
 					"inner1": "innerval1",
@@ -56,7 +56,7 @@ func TestTransform(t *testing.T) {
 			expected: data.DoubleNestedMapObj,
 		},
 		{
-			description: "map with basic slice",
+			description: "map with simple slice",
 			input: map[string]interface{}{
 				"data": []interface{}{
 					map[string]interface{}{
@@ -160,7 +160,7 @@ func TestParse(t *testing.T) {
 		expected    [][]string
 	}{
 		{
-			description: "simple",
+			description: "simple string",
 			input: &parser.StringObj{
 				Prefix: "key1",
 				Val:    "val1",
@@ -179,7 +179,7 @@ func TestParse(t *testing.T) {
 			},
 		},
 		{
-			description: "simple nested",
+			description: "simple nested map",
 			input:       data.SimpleNestedMapObj,
 			expected: [][]string{
 				[]string{"outer1_inner1", "outer1_inner2", "outer2"},
@@ -187,7 +187,7 @@ func TestParse(t *testing.T) {
 			},
 		},
 		{
-			description: "double nested",
+			description: "double nested map",
 			input:       data.DoubleNestedMapObj,
 			expected: [][]string{
 				[]string{"outer1_inner1", "outer1_nestedmap_nested1", "outer1_nestedmap_nested2", "outer2"},
