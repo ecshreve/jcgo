@@ -4,13 +4,14 @@ import (
 	"testing"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/kr/pretty"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/ecshreve/jcgo/parser"
+	"github.com/ecshreve/jcgo/parser/testdata"
 )
 
 func TestTransform(t *testing.T) {
+	data := testdata.NewObjectTestData()
 	spew.Config.DisablePointerAddresses = true
 	spew.Config.DisableCapacities = true
 	spew.Config.Indent = "  "
@@ -27,23 +28,7 @@ func TestTransform(t *testing.T) {
 				"key2": "val2",
 				"key3": "val3",
 			},
-			expected: &parser.MapObj{
-				Prefix: "",
-				Val: []parser.Object{
-					&parser.StringObj{
-						Prefix: "key1",
-						Val:    "val1",
-					},
-					&parser.StringObj{
-						Prefix: "key2",
-						Val:    "val2",
-					},
-					&parser.StringObj{
-						Prefix: "key3",
-						Val:    "val3",
-					},
-				},
-			},
+			expected: data.SimpleMapObj,
 		},
 		{
 			description: "basic nested map",
@@ -54,28 +39,7 @@ func TestTransform(t *testing.T) {
 				},
 				"outer2": "outerval2",
 			},
-			expected: &parser.MapObj{
-				Prefix: "",
-				Val: []parser.Object{
-					&parser.MapObj{
-						Prefix: "outer1",
-						Val: []parser.Object{
-							&parser.StringObj{
-								Prefix: "outer1_inner1",
-								Val:    "innerval1",
-							},
-							&parser.StringObj{
-								Prefix: "outer1_inner2",
-								Val:    "innerval2",
-							},
-						},
-					},
-					&parser.StringObj{
-						Prefix: "outer2",
-						Val:    "outerval2",
-					},
-				},
-			},
+			expected: data.SimpleNestedMapObj,
 		},
 		{
 			description: "basic double nested map",
@@ -89,37 +53,7 @@ func TestTransform(t *testing.T) {
 				},
 				"outer2": "outerval2",
 			},
-			expected: &parser.MapObj{
-				Prefix: "",
-				Val: []parser.Object{
-					&parser.MapObj{
-						Prefix: "outer1",
-						Val: []parser.Object{
-							&parser.StringObj{
-								Prefix: "outer1_inner1",
-								Val:    "innerval1",
-							},
-							&parser.MapObj{
-								Prefix: "outer1_nestedmap",
-								Val: []parser.Object{
-									&parser.StringObj{
-										Prefix: "outer1_nestedmap_nested1",
-										Val:    "nestedval1",
-									},
-									&parser.StringObj{
-										Prefix: "outer1_nestedmap_nested2",
-										Val:    "nestedval2",
-									},
-								},
-							},
-						},
-					},
-					&parser.StringObj{
-						Prefix: "outer2",
-						Val:    "outerval2",
-					},
-				},
-			},
+			expected: data.DoubleNestedMapObj,
 		},
 		{
 			description: "map with basic slice",
@@ -137,50 +71,7 @@ func TestTransform(t *testing.T) {
 					},
 				},
 			},
-			expected: &parser.MapObj{
-				Prefix: "",
-				Val: []parser.Object{
-					&parser.SliceObj{
-						Prefix: "data",
-						Val: []parser.Object{
-							&parser.MapObj{
-								Prefix: "data",
-								Val: []parser.Object{
-									&parser.StringObj{
-										Prefix: "data_key1",
-										Val:    "val1",
-									},
-									&parser.StringObj{
-										Prefix: "data_key2",
-										Val:    "val2",
-									},
-									&parser.StringObj{
-										Prefix: "data_key3",
-										Val:    "val3",
-									},
-								},
-							},
-							&parser.MapObj{
-								Prefix: "data",
-								Val: []parser.Object{
-									&parser.StringObj{
-										Prefix: "data_key1",
-										Val:    "val4",
-									},
-									&parser.StringObj{
-										Prefix: "data_key2",
-										Val:    "val5",
-									},
-									&parser.StringObj{
-										Prefix: "data_key3",
-										Val:    "val6",
-									},
-								},
-							},
-						},
-					},
-				},
-			},
+			expected: data.SimpleSliceMapObj,
 		},
 		{
 			description: "map with slice with nested map",
@@ -202,60 +93,7 @@ func TestTransform(t *testing.T) {
 					},
 				},
 			},
-			expected: &parser.MapObj{
-				Prefix: "",
-				Val: []parser.Object{
-					&parser.SliceObj{
-						Prefix: "data",
-						Val: []parser.Object{
-							&parser.MapObj{
-								Prefix: "data",
-								Val: []parser.Object{
-									&parser.StringObj{
-										Prefix: "data_key1",
-										Val:    "val1",
-									},
-									&parser.MapObj{
-										Prefix: "data_nestedmap",
-										Val: []parser.Object{
-											&parser.StringObj{
-												Prefix: "data_nestedmap_nested1",
-												Val:    "nestedval1",
-											},
-											&parser.StringObj{
-												Prefix: "data_nestedmap_nested2",
-												Val:    "nestedval2",
-											},
-										},
-									},
-								},
-							},
-							&parser.MapObj{
-								Prefix: "data",
-								Val: []parser.Object{
-									&parser.StringObj{
-										Prefix: "data_key1",
-										Val:    "val4",
-									},
-									&parser.MapObj{
-										Prefix: "data_nestedmap",
-										Val: []parser.Object{
-											&parser.StringObj{
-												Prefix: "data_nestedmap_nested1",
-												Val:    "nestedval3",
-											},
-											&parser.StringObj{
-												Prefix: "data_nestedmap_nested2",
-												Val:    "nestedval4",
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
+			expected: data.SimpleSliceNestedMapObj,
 		},
 		{
 			description: "complex map with nested maps and slices",
@@ -297,122 +135,7 @@ func TestTransform(t *testing.T) {
 					},
 				},
 			},
-			expected: &parser.MapObj{
-				Prefix: "",
-				Val: []parser.Object{
-					&parser.SliceObj{
-						Prefix: "data",
-						Val: []parser.Object{
-							&parser.MapObj{
-								Prefix: "data",
-								Val: []parser.Object{
-									&parser.StringObj{
-										Prefix: "data_key1",
-										Val:    "val1",
-									},
-									&parser.MapObj{
-										Prefix: "data_nestedmap",
-										Val: []parser.Object{
-											&parser.StringObj{
-												Prefix: "data_nestedmap_nested1",
-												Val:    "nestedval1",
-											},
-											&parser.StringObj{
-												Prefix: "data_nestedmap_nested2",
-												Val:    "nestedval2",
-											},
-										},
-									},
-									&parser.SliceObj{
-										Prefix: "data_nestedslice",
-										Val: []parser.Object{
-											&parser.MapObj{
-												Prefix: "data_nestedslice",
-												Val: []parser.Object{
-													&parser.StringObj{
-														Prefix: "data_nestedslice_nestedslicemap1",
-														Val:    "nestedslicemapval1",
-													},
-													&parser.StringObj{
-														Prefix: "data_nestedslice_nestedslicemap2",
-														Val:    "nestedslicemapval2",
-													},
-												},
-											},
-											&parser.MapObj{
-												Prefix: "data_nestedslice",
-												Val: []parser.Object{
-													&parser.StringObj{
-														Prefix: "data_nestedslice_nestedslicemap1",
-														Val:    "nestedslicemapval3",
-													},
-													&parser.StringObj{
-														Prefix: "data_nestedslice_nestedslicemap2",
-														Val:    "nestedslicemapval4",
-													},
-												},
-											},
-										},
-									},
-								},
-							},
-							&parser.MapObj{
-								Prefix: "data",
-								Val: []parser.Object{
-									&parser.StringObj{
-										Prefix: "data_key1",
-										Val:    "val4",
-									},
-									&parser.MapObj{
-										Prefix: "data_nestedmap",
-										Val: []parser.Object{
-											&parser.StringObj{
-												Prefix: "data_nestedmap_nested1",
-												Val:    "nestedval3",
-											},
-											&parser.StringObj{
-												Prefix: "data_nestedmap_nested2",
-												Val:    "nestedval4",
-											},
-										},
-									},
-									&parser.SliceObj{
-										Prefix: "data_nestedslice",
-										Val: []parser.Object{
-											&parser.MapObj{
-												Prefix: "data_nestedslice",
-												Val: []parser.Object{
-													&parser.StringObj{
-														Prefix: "data_nestedslice_nestedslicemap1",
-														Val:    "nestedslicemapval5",
-													},
-													&parser.StringObj{
-														Prefix: "data_nestedslice_nestedslicemap2",
-														Val:    "nestedslicemapval6",
-													},
-												},
-											},
-											&parser.MapObj{
-												Prefix: "data_nestedslice",
-												Val: []parser.Object{
-													&parser.StringObj{
-														Prefix: "data_nestedslice_nestedslicemap1",
-														Val:    "nestedslicemapval7",
-													},
-													&parser.StringObj{
-														Prefix: "data_nestedslice_nestedslicemap2",
-														Val:    "nestedslicemapval8",
-													},
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
+			expected: data.ComplexMapObj,
 		},
 	}
 
@@ -426,6 +149,11 @@ func TestTransform(t *testing.T) {
 }
 
 func TestParse(t *testing.T) {
+	data := testdata.NewObjectTestData()
+	spew.Config.DisablePointerAddresses = true
+	spew.Config.DisableCapacities = true
+	spew.Config.Indent = "  "
+
 	testcases := []struct {
 		description string
 		input       parser.Object
@@ -444,23 +172,7 @@ func TestParse(t *testing.T) {
 		},
 		{
 			description: "simple map",
-			input: &parser.MapObj{
-				Prefix: "",
-				Val: []parser.Object{
-					&parser.StringObj{
-						Prefix: "key1",
-						Val:    "val1",
-					},
-					&parser.StringObj{
-						Prefix: "key2",
-						Val:    "val2",
-					},
-					&parser.StringObj{
-						Prefix: "key3",
-						Val:    "val3",
-					},
-				},
-			},
+			input:       data.SimpleMapObj,
 			expected: [][]string{
 				[]string{"key1", "key2", "key3"},
 				[]string{"val1", "val2", "val3"},
@@ -468,28 +180,7 @@ func TestParse(t *testing.T) {
 		},
 		{
 			description: "simple nested",
-			input: &parser.MapObj{
-				Prefix: "",
-				Val: []parser.Object{
-					&parser.MapObj{
-						Prefix: "outer1",
-						Val: []parser.Object{
-							&parser.StringObj{
-								Prefix: "outer1_inner1",
-								Val:    "innerval1",
-							},
-							&parser.StringObj{
-								Prefix: "outer1_inner2",
-								Val:    "innerval2",
-							},
-						},
-					},
-					&parser.StringObj{
-						Prefix: "outer2",
-						Val:    "outerval2",
-					},
-				},
-			},
+			input:       data.SimpleNestedMapObj,
 			expected: [][]string{
 				[]string{"outer1_inner1", "outer1_inner2", "outer2"},
 				[]string{"innerval1", "innerval2", "outerval2"},
@@ -497,37 +188,7 @@ func TestParse(t *testing.T) {
 		},
 		{
 			description: "double nested",
-			input: &parser.MapObj{
-				Prefix: "",
-				Val: []parser.Object{
-					&parser.MapObj{
-						Prefix: "outer1",
-						Val: []parser.Object{
-							&parser.StringObj{
-								Prefix: "outer1_inner1",
-								Val:    "innerval1",
-							},
-							&parser.MapObj{
-								Prefix: "outer1_nestedmap",
-								Val: []parser.Object{
-									&parser.StringObj{
-										Prefix: "outer1_nestedmap_nested1",
-										Val:    "nestedval1",
-									},
-									&parser.StringObj{
-										Prefix: "outer1_nestedmap_nested2",
-										Val:    "nestedval2",
-									},
-								},
-							},
-						},
-					},
-					&parser.StringObj{
-						Prefix: "outer2",
-						Val:    "outerval2",
-					},
-				},
-			},
+			input:       data.DoubleNestedMapObj,
 			expected: [][]string{
 				[]string{"outer1_inner1", "outer1_nestedmap_nested1", "outer1_nestedmap_nested2", "outer2"},
 				[]string{"innerval1", "nestedval1", "nestedval2", "outerval2"},
@@ -539,7 +200,7 @@ func TestParse(t *testing.T) {
 		t.Run(testcase.description, func(t *testing.T) {
 			actual := testcase.input.Parse()
 			assert.Equal(t, testcase.expected, actual)
-			pretty.Print(actual)
+			spew.Dump(actual)
 		})
 	}
 }
