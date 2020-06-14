@@ -6,8 +6,8 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"github.com/stretchr/testify/assert"
 
-	oo "github.com/ecshreve/jcgo/parser/object"
-	"github.com/ecshreve/jcgo/parser/object/testdata"
+	oo "github.com/ecshreve/jcgo/internal/object"
+	"github.com/ecshreve/jcgo/internal/testdata"
 )
 
 func TestObjectCreation(t *testing.T) {
