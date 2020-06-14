@@ -4,6 +4,7 @@ import "github.com/ecshreve/jcgo/parser"
 
 type ObjectTestData struct {
 	SimpleMapObj            *parser.MapObj
+	SimpleAllTypesMapObj    *parser.MapObj
 	SimpleNestedMapObj      *parser.MapObj
 	DoubleNestedMapObj      *parser.MapObj
 	SimpleSliceMapObj       *parser.MapObj
@@ -26,6 +27,24 @@ func NewObjectTestData() *ObjectTestData {
 			&parser.StringObj{
 				Prefix: "key3",
 				Val:    "val3",
+			},
+		},
+	}
+
+	simpleAllTypesMapObj := &parser.MapObj{
+		Prefix: "",
+		Val: []parser.Object{
+			&parser.StringObj{
+				Prefix: "key1",
+				Val:    "val1",
+			},
+			&parser.FloatObj{
+				Prefix: "key2",
+				Val:    float64(5),
+			},
+			&parser.FloatObj{
+				Prefix: "key3",
+				Val:    float64(5.5),
 			},
 		},
 	}
@@ -304,6 +323,7 @@ func NewObjectTestData() *ObjectTestData {
 
 	return &ObjectTestData{
 		SimpleMapObj:            simpleMapObj,
+		SimpleAllTypesMapObj:    simpleAllTypesMapObj,
 		SimpleNestedMapObj:      simpleNestedMapObj,
 		DoubleNestedMapObj:      doubleNestedMapObj,
 		SimpleSliceMapObj:       simpleSliceMapObj,
