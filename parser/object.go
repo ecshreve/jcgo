@@ -8,7 +8,7 @@ import (
 // Object is representation of a JSON object.
 type Object interface {
 	getPrefix() string
-	parse() [][]string
+	Parse() [][]string
 }
 
 // ByPrefix implements the sort.Interface on the Prefix field.
@@ -62,8 +62,18 @@ func (o MapObj) getPrefix() string {
 	return o.Prefix
 }
 
-func (o MapObj) parse() [][]string {
-	return nil
+// Parse returns the 2d slice of strings for the given MapObj.
+func (o MapObj) Parse() [][]string {
+	var keys []string
+	var vals []string
+
+	for _, item := range o.Val {
+		parsed := item.Parse()
+		keys = append(keys, parsed[0]...)
+		vals = append(vals, parsed[1]...)
+	}
+
+	return [][]string{keys, vals}
 }
 
 // StringObj implements the Object interface for a string value.
@@ -84,6 +94,10 @@ func (o StringObj) getPrefix() string {
 	return o.Prefix
 }
 
-func (o StringObj) parse() [][]string {
-	return [][]string{[]string{o.Prefix}, []string{o.Val}}
+// Parse returns the 2d slice of strings for the given StringObj.
+func (o StringObj) Parse() [][]string {
+	return [][]string{
+		[]string{o.Prefix},
+		[]string{o.Val},
+	}
 }
