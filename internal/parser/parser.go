@@ -7,6 +7,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/ecshreve/jcgo/internal/helpers"
+
 	oo "github.com/ecshreve/jcgo/internal/object"
 	"github.com/samsarahq/go/oops"
 )
@@ -48,6 +50,9 @@ func WriteCSVFile(data [][]string, path string) (*os.File, error) {
 	// Create a CSV writer.
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
+
+	// Truncate header strings.
+	data[0] = helpers.TruncateColumnHeaders(data[0])
 
 	// Write each row in our data to the CSV file.
 	for _, value := range data {
