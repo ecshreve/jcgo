@@ -1,4 +1,4 @@
-package main
+package parser
 
 import (
 	"bytes"
@@ -6,19 +6,17 @@ import (
 	"log"
 
 	"github.com/samsarahq/go/oops"
-
-	"github.com/ecshreve/jcgo/internal/parser"
 )
 
-// parseArgs returns a parser.Config for the given slice of command line args,
+// ParseArgs returns a Config for the given slice of command line args,
 // along with any output message or error that result from parsing.
-func parseArgs(args []string) (*parser.Config, string, error) {
+func ParseArgs(args []string) (*Config, string, error) {
 	flags := flag.NewFlagSet(args[0], flag.ContinueOnError)
 
 	var buf bytes.Buffer
 	flags.SetOutput(&buf)
 
-	var cfg parser.Config
+	var cfg Config
 	flags.StringVar(&cfg.Infile, "infile", "", "specify input file")
 
 	err := flags.Parse(args[1:])
@@ -30,9 +28,9 @@ func parseArgs(args []string) (*parser.Config, string, error) {
 	return &cfg, buf.String(), nil
 }
 
-// handleParseError returns an exit status code and an error for the given
+// HandleParseError returns an exit status code and an error for the given
 // output string and error that result from parsing command line args.
-func handleParseError(output string, err error) (int, error) {
+func HandleParseError(output string, err error) (int, error) {
 	// Parsing should result in printing the help message to the console, and
 	// exiting the program. But we don't want to differentiate this type of exit
 	// from a generic Fatal exit, so we give it a status code of 2.
