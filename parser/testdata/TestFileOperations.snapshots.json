@@ -1,0 +1,71 @@
+[
+  {
+    "Name": "read valid json file",
+    "Values": [
+      {
+        "data": {
+          "organization": {
+            "groups": [
+              {
+                "dispatchRoute": {
+                  "auditLogs": [
+                    {
+                      "afterState": [
+                        {
+                          "arrivedAt": 0,
+                          "departureTimeMs": 0,
+                          "destinationName": "CARI307",
+                          "enRouteAt": 0,
+                          "id": 4337769816,
+                          "jobState": 4,
+                          "skippedAt": 1591056540000
+                        },
+                        {
+                          "arrivedAt": 1591034132029,
+                          "departureTimeMs": 1591034209011,
+                          "destinationName": "JASON077",
+                          "enRouteAt": 1591032175030,
+                          "id": 4337769817,
+                          "jobState": 3,
+                          "skippedAt": 0
+                        }
+                      ],
+                      "beforeState": [
+                        {
+                          "arrivedAt": 0,
+                          "departureTimeMs": 0,
+                          "destinationName": "CARI307",
+                          "enRouteAt": 0,
+                          "id": 4337769816,
+                          "jobState": 4,
+                          "skippedAt": 1591007383026
+                        },
+                        {
+                          "arrivedAt": 1591034132029,
+                          "departureTimeMs": 1591034209011,
+                          "destinationName": "JASON077",
+                          "enRouteAt": 1591032175030,
+                          "id": 4337769817,
+                          "jobState": 3,
+                          "skippedAt": 0
+                        }
+                      ],
+                      "changedAtMs": 1591056576414,
+                      "events": [
+                        {
+                          "eventAt": 1591056576414,
+                          "eventType": 0
+                        }
+                      ],
+                      "id": 4333023554
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+]
