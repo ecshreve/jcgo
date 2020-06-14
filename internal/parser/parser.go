@@ -7,10 +7,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ecshreve/jcgo/internal/helpers"
-
-	oo "github.com/ecshreve/jcgo/internal/object"
 	"github.com/samsarahq/go/oops"
+
+	"github.com/ecshreve/jcgo/internal/helpers"
+	oo "github.com/ecshreve/jcgo/internal/object"
 )
 
 // ReadJSONFile reads the JSON file at the given path into a map, returns an
