@@ -1,5 +1,5 @@
 build:
-	go build -o bin/jcgo github.com/ecshreve/jcgo
+	go build -o bin/jcgo github.com/ecshreve/jcgo/cmd/jcgo
 
 run-only:
 	bin/jcgo $(INFILE)
