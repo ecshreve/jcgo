@@ -341,7 +341,11 @@ func TestFileOperations(t *testing.T) {
 }
 
 func TestConvert(t *testing.T) {
-	file, err := parser.Convert("../testdata/jsontest.json")
+	testConfig := &parser.Config{
+		Infile: "../testdata/jsontest.json",
+	}
+
+	file, err := parser.Convert(testConfig)
 	assert.NoError(t, err)
 	assert.NotNil(t, file)
 	assert.Equal(t, "../testdata/jsontest.output.csv", file.Name())

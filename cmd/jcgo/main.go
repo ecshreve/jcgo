@@ -23,7 +23,7 @@ func main() {
 	}
 
 	// Convert the JSON file to a CSV file.
-	file, err := parser.Convert(cfg.Infile)
+	file, err := parser.Convert(cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
