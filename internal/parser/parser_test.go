@@ -67,8 +67,9 @@ func TestParseArgs(t *testing.T) {
 			description: "basic valid args",
 			inputArgs:   []string{"dummy", "--infile=testfile.json"},
 			expectedConfig: &parser.Config{
-				Infile: "testfile.json",
-				Args:   []string{},
+				Infile:  "testfile.json",
+				Outfile: "testfile.output.csv",
+				Args:    []string{},
 			},
 			expectedOutput: "",
 		},
@@ -350,7 +351,8 @@ func TestConvert(t *testing.T) {
 		{
 			description: "valid infile, default outfile",
 			input: &parser.Config{
-				Infile: "../testdata/jsontest.json",
+				Infile:  "../testdata/jsontest.json",
+				Outfile: "../testdata/jsontest.output.csv",
 			},
 			expectedOutfilePath: "../testdata/jsontest.output.csv",
 		},

@@ -14,19 +14,32 @@ import (
 func ParseArgs(args []string) (*Config, string, error) {
 	flags := flag.NewFlagSet(args[0], flag.ContinueOnError)
 
+	// Set the destination for usage and error messages.
 	var buf bytes.Buffer
 	flags.SetOutput(&buf)
 
+	// Initialize a new Config and set the flag vars that correspond with the
+	// Config fields.
 	var cfg Config
 	flags.StringVar(&cfg.Infile, "infile", "", "specify input file")
 	flags.StringVar(&cfg.Outfile, "outfile", "", "specify output file")
 
+	// Parse the command line flags and arguments.
 	err := flags.Parse(args[1:])
 	if err != nil {
 		return nil, buf.String(), err
 	}
-
 	cfg.Args = flags.Args()
+
+	// If no outfile was provided as a command line argument, then set the
+	// Config's outfile to the default outfile path.
+	if len(cfg.Outfile) == 0 {
+		err := cfg.SetDefaultOutfile()
+		if err != nil {
+			return nil, buf.String(), oops.Wrapf(err, "unable to set outfile for Config")
+		}
+	}
+
 	return &cfg, buf.String(), nil
 }
 

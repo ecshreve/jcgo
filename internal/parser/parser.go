@@ -125,13 +125,6 @@ func Convert(cfg *Config) (*os.File, error) {
 		return nil, oops.Wrapf(err, "unable to parse Object")
 	}
 
-	if len(cfg.Outfile) == 0 {
-		err = cfg.SetDefaultOutfile()
-		if err != nil {
-			return nil, oops.Wrapf(err, "unable to set outfile")
-		}
-	}
-
 	// Write the parsed data to CSV file.
 	file, err := WriteCSVFile(parsed, cfg.Outfile)
 	if err != nil {
