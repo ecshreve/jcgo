@@ -341,14 +341,36 @@ func TestFileOperations(t *testing.T) {
 }
 
 func TestConvert(t *testing.T) {
-	testConfig := &parser.Config{
-		Infile: "../testdata/jsontest.json",
+	testcases := []struct {
+		description         string
+		input               *parser.Config
+		expectedOutfilePath string
+		expectError         bool
+	}{
+		{
+			description: "valid infile, default outfile",
+			input: &parser.Config{
+				Infile: "../testdata/jsontest.json",
+			},
+			expectedOutfilePath: "../testdata/jsontest.output.csv",
+		},
+		{
+			description: "valid infile, explicit outfile",
+			input: &parser.Config{
+				Infile:  "../testdata/jsontest.json",
+				Outfile: "../testdata/explicit_output_file.csv",
+			},
+			expectedOutfilePath: "../testdata/explicit_output_file.csv",
+		},
 	}
 
-	file, err := parser.Convert(testConfig)
-	assert.NoError(t, err)
-	assert.NotNil(t, file)
-	assert.Equal(t, "../testdata/jsontest.output.csv", file.Name())
+	for _, testcase := range testcases {
+		t.Run(testcase.description, func(t *testing.T) {
+			actualFile, err := parser.Convert(testcase.input)
+			assert.Equal(t, testcase.expectError, err != nil)
+			assert.Equal(t, testcase.expectedOutfilePath, actualFile.Name())
+		})
+	}
 }
 
 func TestSetDefaultOutfile(t *testing.T) {
