@@ -1,5 +1,12 @@
 # jcgo
 
+![Go](https://github.com/ecshreve/jcgo/workflows/Go/badge.svg?branch=master)
+![Go Report Card](https://goreportcard.com/badge/github.com/ecshreve/jcgo) 
+![Go Version](https://img.shields.io/github/go-mod/go-version/ecshreve/jcgo) 
+![Last Commit](https://img.shields.io/github/last-commit/ecshreve/jcgo)
+
+## Description
+
 JSON to CSV converter in Golang.
 
 ## Usage
