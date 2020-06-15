@@ -69,8 +69,8 @@ func (o StringObj) getPrefix() string {
 // Parse returns the 2d slice of strings for the given StringObj.
 func (o StringObj) Parse() ([][]string, error) {
 	return [][]string{
-		[]string{o.Prefix},
-		[]string{o.Val},
+		{o.Prefix},
+		{o.Val},
 	}, nil
 }
 
@@ -95,8 +95,8 @@ func (o BoolObj) getPrefix() string {
 // Parse returns the 2d slice of strings for the given BoolObj.
 func (o BoolObj) Parse() ([][]string, error) {
 	return [][]string{
-		[]string{o.Prefix},
-		[]string{strconv.FormatBool(o.Val)},
+		{o.Prefix},
+		{strconv.FormatBool(o.Val)},
 	}, nil
 }
 
@@ -130,8 +130,8 @@ func (o FloatObj) Parse() ([][]string, error) {
 	}
 
 	return [][]string{
-		[]string{o.Prefix},
-		[]string{stringVal},
+		{o.Prefix},
+		{stringVal},
 	}, nil
 }
 

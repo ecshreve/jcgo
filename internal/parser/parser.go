@@ -80,7 +80,7 @@ func ReadJSONFile(path string) (map[string]interface{}, error) {
 func WriteCSVFile(data [][]string, path string) (*os.File, error) {
 	file, err := os.Create(path)
 	if err != nil {
-		return nil, oops.Wrapf(err, "unable to create ouput file")
+		return nil, oops.Wrapf(err, "unable to create output file")
 	}
 	defer file.Close()
 

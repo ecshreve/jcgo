@@ -343,8 +343,8 @@ func TestFileOperations(t *testing.T) {
 
 	// Verify we can write valid data to CSV.
 	data := [][]string{
-		[]string{"one", "two"},
-		[]string{"one_one", "two_two"},
+		{"one", "two"},
+		{"one_one", "two_two"},
 	}
 	file, err := parser.WriteCSVFile(data, "../testdata/testoutput.csv")
 	assert.NoError(t, err)
