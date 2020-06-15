@@ -27,6 +27,11 @@ type Config struct {
 //  - No input file provided.
 //  - Non-JSON input file provided.
 //  - Non-CSV output file provided.
+//
+// TODO
+//  - is it possible for the Config to not have an outfile here? how should that
+//    be handled?
+//  - what happens if the Config's outfile already exists?
 func (cfg *Config) Validate() error {
 	if len(cfg.Infile) == 0 {
 		return oops.Errorf("please provide a file with the --infile flag")
@@ -35,6 +40,11 @@ func (cfg *Config) Validate() error {
 	ext := filepath.Ext(cfg.Infile)
 	if ext != ".json" {
 		return oops.Errorf("infile mush be a .json file -- infile: %s", cfg.Infile)
+	}
+
+	ext = filepath.Ext(cfg.Outfile)
+	if ext != ".csv" {
+		return oops.Errorf("outfile mush be a .csv file -- outfile: %s", cfg.Outfile)
 	}
 
 	return nil
