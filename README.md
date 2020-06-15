@@ -20,7 +20,7 @@ JSON to CSV converter in Golang.
 git clone https://github.com/ecshreve/jcgo.git
 cd jcgo
 make build
-bin/jcgo jsontestlocal.json
+bin/jcgo --infile jsontestlocal.json
 ```
 
 ## reference
