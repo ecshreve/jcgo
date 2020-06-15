@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestEndToEnd(t *testing.T) {
+func TestEndToEndSuccess(t *testing.T) {
 	snap := snapshotter.New(t)
 	defer snap.Verify()
 

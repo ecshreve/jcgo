@@ -32,7 +32,7 @@ func ParseArgs(args []string) (*Config, string, error) {
 // output string and error that result from parsing command line args.
 func HandleParseError(output string, err error) (int, error) {
 	// Parsing should result in printing the help message to the console, and
-	// exiting the program. But we don't want to differentiate this type of exit
+	// exiting the program. But we want to differentiate this type of exit
 	// from a generic Fatal exit, so we give it a status code of 2.
 	if err == flag.ErrHelp {
 		log.Println(output)
