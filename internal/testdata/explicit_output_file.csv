@@ -1,0 +1,3 @@
+afterState_arrivedAt,afterState_departureTimeMs,afterState_destinationName,afterState_enRouteAt,afterState_id,afterState_jobState,afterState_skippedAt,beforeState_arrivedAt,beforeState_departureTimeMs,beforeState_destinationName,beforeState_enRouteAt,beforeState_id,beforeState_jobState,beforeState_skippedAt,changedAtMs,events_eventAt,events_eventType,id
+0,0,CARI307,0,4337769816,4,1591056540000,0,0,CARI307,0,4337769816,4,1591007383026,1591056576414,1591056576414,0,4333023554
+1591034132029,1591034209011,JASON077,1591032175030,4337769817,3,0,1591034132029,1591034209011,JASON077,1591032175030,4337769817,3,0,1591056576414,1591056576414,0,4333023554

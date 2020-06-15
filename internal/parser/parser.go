@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/samsarahq/go/oops"
 
@@ -17,7 +16,8 @@ import (
 // Config represents various configuration parameters for one JSON to CSV
 // parsing session.
 type Config struct {
-	Infile string
+	Infile  string
+	Outfile string
 
 	Args []string
 }
@@ -26,6 +26,7 @@ type Config struct {
 // for the following reasons:
 //  - No input file provided.
 //  - Non-JSON input file provided.
+//  - Non-CSV output file provided.
 func (cfg *Config) Validate() error {
 	if len(cfg.Infile) == 0 {
 		return oops.Errorf("please provide a file with the --infile flag")
@@ -124,14 +125,15 @@ func Convert(cfg *Config) (*os.File, error) {
 		return nil, oops.Wrapf(err, "unable to parse Object")
 	}
 
-	// Build the path for the output file.
-	splitPath := strings.Split(cfg.Infile, ".")
-	splitPath[len(splitPath)-1] = "output"
-	splitPath = append(splitPath, "csv")
-	outputPath := strings.Join(splitPath, ".")
+	if len(cfg.Outfile) == 0 {
+		err = cfg.SetDefaultOutfile()
+		if err != nil {
+			return nil, oops.Wrapf(err, "unable to set outfile")
+		}
+	}
 
 	// Write the parsed data to CSV file.
-	file, err := WriteCSVFile(parsed, outputPath)
+	file, err := WriteCSVFile(parsed, cfg.Outfile)
 	if err != nil {
 		return nil, oops.Wrapf(err, "unable to write to csv file")
 	}
