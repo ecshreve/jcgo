@@ -12,7 +12,14 @@ func main() {
 	// Handle any errors that resulted from parsing flags.
 	exitCode, err := parser.HandleParseError(output, err)
 	if err != nil {
-		log.Print(err)
+		log.Fatal(err)
+	}
+
+	// We'll hit this condition when the user enters `--help` as a command line
+	// flag, but it isn't implemented.
+	//
+	// TODO: fix this because it's silly.
+	if exitCode > 0 {
 		os.Exit(exitCode)
 	}
 
