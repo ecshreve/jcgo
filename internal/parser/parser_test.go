@@ -1,6 +1,8 @@
 package parser_test
 
 import (
+	"errors"
+	"flag"
 	"os"
 	"strings"
 	"testing"
@@ -87,6 +89,46 @@ func TestParseArgs(t *testing.T) {
 
 			actualOutputPrefix := strings.Split(actualOutput, "\n")[0]
 			assert.Equal(t, testcase.expectedOutput, actualOutputPrefix)
+		})
+	}
+}
+
+func TestHandleParseError(t *testing.T) {
+	testcases := []struct {
+		description      string
+		inputOutput      string
+		inputError       error
+		expectedExitCode int
+		expectError      bool
+	}{
+		{
+			description:      "valid input",
+			inputOutput:      "dummy string",
+			inputError:       nil,
+			expectedExitCode: 0,
+			expectError:      false,
+		},
+		{
+			description:      "help error",
+			inputOutput:      "dummy string",
+			inputError:       flag.ErrHelp,
+			expectedExitCode: 2,
+			expectError:      false,
+		},
+		{
+			description:      "generic error",
+			inputOutput:      "dummy string",
+			inputError:       errors.New("generic error"),
+			expectedExitCode: 1,
+			expectError:      true,
+		},
+	}
+
+	for _, testcase := range testcases {
+		t.Run(testcase.description, func(t *testing.T) {
+			actualExitCode, err := parser.HandleParseError(testcase.inputOutput, testcase.inputError)
+			assert.Equal(t, testcase.expectError, err != nil)
+			assert.Equal(t, testcase.expectedExitCode, actualExitCode)
 		})
 	}
 }
