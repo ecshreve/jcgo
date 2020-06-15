@@ -1,6 +1,7 @@
 Projects:
     Large:
         ☐ full JSON spec support
+            json spec: https://www.json.org/json-en.html
             ☐ do an audit of where this implementation differs from the spec
 
     Medium:
@@ -13,7 +14,7 @@ Projects:
         ☐ decouple the flag parsing stuff from the `parser` package
 
     Small:
-        ☐ specify output file as command line option @started(20-06-14 22:02)
+        ✔ specify output file as command line option @started(20-06-14 22:02) @done(20-06-14 22:52) @lasted(50m46s)
         ☐ publish godoc
         ☐ revise readme file
         ☐ audit existing packages to see if scope makes sense for funcs

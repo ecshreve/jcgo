@@ -31,6 +31,7 @@ bin/jcgo --infile jsontestlocal.json
 - [Using Go Modules](https://blog.golang.org/using-go-modules)
 - [encoding/json](https://golang.org/pkg/encoding/json/)
 - [encoding/csv](https://golang.org/pkg/encoding/csv/)
+- [JSON specification](https://www.json.org/json-en.html)
 
 ## Googling
 
