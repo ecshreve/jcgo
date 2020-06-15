@@ -28,7 +28,7 @@ type Config struct {
 //  - Non-JSON input file provided.
 //  - Non-CSV output file provided.
 //
-// TODO
+// TODO: some open questions re: edge case handlin
 //  - is it possible for the Config to not have an outfile here? how should that
 //    be handled?
 //  - what happens if the Config's outfile already exists?
