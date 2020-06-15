@@ -13,13 +13,16 @@ Projects:
         ☐ decouple the flag parsing stuff from the `parser` package
 
     Small:
-        ☐ specify output file as command line option
+        ☐ specify output file as command line option @started(20-06-14 22:02)
         ☐ publish godoc
-        ☐ revise readme file 
+        ☐ revise readme file
+        ☐ audit existing packages to see if scope makes sense for funcs
+        ☐ make vscode snippet for table test bootstrapping
 
 Testing:
     ☐ get some larger JSON files to test/validate/snapshot with
     ☐ add `go test` examples
+    ☐ is it possible to mock some functions to force error responses?
 
 Tooling:
     ☐ fix the weird assert package import thing
