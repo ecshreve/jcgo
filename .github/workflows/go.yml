@@ -36,5 +36,8 @@ jobs:
     - name: Test
       run: make testv
     
+    - name: Test with coverage
+      run: make testc
+    
     - name: Codecov
       uses: codecov/codecov-action@v1.0.7
