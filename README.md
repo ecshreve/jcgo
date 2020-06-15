@@ -10,7 +10,7 @@
 
 JSON to CSV converter in Golang.
 
-**Note: at this time, this converter doesn't implement the full JSON spec.**
+**Note: at this time, this converter doesn't implement the full JSON spec.** (it doesn't currently handle arrays of scalar values, only arrays of `map[string]interface{}`)
 
 ## Usage
 
