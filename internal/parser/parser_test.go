@@ -350,3 +350,44 @@ func TestConvert(t *testing.T) {
 	assert.NotNil(t, file)
 	assert.Equal(t, "../testdata/jsontest.output.csv", file.Name())
 }
+
+func TestSetDefaultOutfile(t *testing.T) {
+	testcases := []struct {
+		description string
+		input       *parser.Config
+		expected    *parser.Config
+		expectError bool
+	}{
+		{
+			description: "outfile already exists, expect error",
+			input: &parser.Config{
+				Infile:  "testinfile.json",
+				Outfile: "testoutfile.csv",
+			},
+			expected: &parser.Config{
+				Infile:  "testinfile.json",
+				Outfile: "testoutfile.csv",
+			},
+			expectError: true,
+		},
+		{
+			description: "outfile doesn't exist, expect default outfile and no error",
+			input: &parser.Config{
+				Infile: "testinfile.json",
+			},
+			expected: &parser.Config{
+				Infile:  "testinfile.json",
+				Outfile: "testinfile.output.csv",
+			},
+			expectError: false,
+		},
+	}
+
+	for _, testcase := range testcases {
+		t.Run(testcase.description, func(t *testing.T) {
+			err := testcase.input.SetDefaultOutfile()
+			assert.Equal(t, testcase.expectError, err != nil)
+			assert.Equal(t, testcase.expected, testcase.input)
+		})
+	}
+}
