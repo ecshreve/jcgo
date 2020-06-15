@@ -105,9 +105,9 @@ func Transform(input map[string]interface{}) (oo.Object, error) {
 
 // Convert converts the given json file at the given path to a csv file, or
 // returns an error if unable to convert the file.
-func Convert(path string) (*os.File, error) {
+func Convert(cfg *Config) (*os.File, error) {
 	// Read the JSON file into a map.
-	raw, err := ReadJSONFile(path)
+	raw, err := ReadJSONFile(cfg.Infile)
 	if err != nil {
 		return nil, oops.Wrapf(err, "unable to read json file")
 	}
@@ -125,7 +125,7 @@ func Convert(path string) (*os.File, error) {
 	}
 
 	// Build the path for the output file.
-	splitPath := strings.Split(path, ".")
+	splitPath := strings.Split(cfg.Infile, ".")
 	splitPath[len(splitPath)-1] = "output"
 	splitPath = append(splitPath, "csv")
 	outputPath := strings.Join(splitPath, ".")
