@@ -4,10 +4,13 @@
 ![Go Report Card](https://goreportcard.com/badge/github.com/ecshreve/jcgo) 
 ![Go Version](https://img.shields.io/github/go-mod/go-version/ecshreve/jcgo) 
 ![Last Commit](https://img.shields.io/github/last-commit/ecshreve/jcgo)
+![Codecov](https://img.shields.io/codecov/c/github/ecshreve/jcgo)
 
 ## Description
 
-JSON to CSV converter in Golang.
+JSON to CSV converter in Golang. 
+
+Note: at this time, this converter doesn't implement the full JSON spec.
 
 ## Usage
 
