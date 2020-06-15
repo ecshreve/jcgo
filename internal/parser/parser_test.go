@@ -21,25 +21,41 @@ func TestValidateConfig(t *testing.T) {
 		valid       bool
 	}{
 		{
-			description: "no input file",
+			description: "no infile",
 			input: &parser.Config{
 				Infile: "",
 			},
 			valid: false,
 		},
 		{
-			description: "non-json input file",
+			description: "non-json infile",
 			input: &parser.Config{
 				Infile: "testfilename.csv",
 			},
 			valid: false,
 		},
 		{
-			description: "valid input file",
+			description: "valid infile, valid outfile",
+			input: &parser.Config{
+				Infile:  "testfilename.json",
+				Outfile: "testfilename.output.csv",
+			},
+			valid: true,
+		},
+		{
+			description: "valid infile, no outfile",
 			input: &parser.Config{
 				Infile: "testfilename.json",
 			},
-			valid: true,
+			valid: false,
+		},
+		{
+			description: "valid infile, invalid outfile",
+			input: &parser.Config{
+				Infile:  "testfilename.json",
+				Outfile: "badoutfile.jpeg",
+			},
+			valid: false,
 		},
 	}
 
