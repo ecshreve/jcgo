@@ -1,23 +1,26 @@
 # jcgo
 
 ![Go](https://github.com/ecshreve/jcgo/workflows/Go/badge.svg?branch=master)
-![Go Report Card](https://goreportcard.com/badge/github.com/ecshreve/jcgo) 
-![Go Version](https://img.shields.io/github/go-mod/go-version/ecshreve/jcgo) 
+![Go Report Card](https://goreportcard.com/badge/github.com/ecshreve/jcgo)
+![Go Version](https://img.shields.io/github/go-mod/go-version/ecshreve/jcgo)
 ![Last Commit](https://img.shields.io/github/last-commit/ecshreve/jcgo)
 ![Codecov](https://img.shields.io/codecov/c/github/ecshreve/jcgo)
 
 ## Description
 
-JSON to CSV converter in Golang. 
+JSON to CSV converter in Golang.
 
-Note: at this time, this converter doesn't implement the full JSON spec.
+**Note: at this time, this converter doesn't implement the full JSON spec.**
 
 ## Usage
 
 `jcgo` reads JSON from the file specified as a command line argument, parses the JSON, and writes the data to a CSV file.
 
 ```{bash}
-jcgo jsontestlocal.json
+git clone https://github.com/ecshreve/jcgo.git
+cd jcgo
+make build
+bin/jcgo jsontestlocal.json
 ```
 
 ```{bash}

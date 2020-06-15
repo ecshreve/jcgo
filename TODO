@@ -1,0 +1,45 @@
+Projects:
+    Large:
+        ☐ full JSON spec support
+            ☐ do an audit of where this implementation differs from the spec
+
+    Medium:
+        ☐ fill empty cells as a config option
+            current implementation fills all empty cells by default, would be 
+            nice if this was a configuration option
+        ☐ support for reading input from the command line
+            current implementation can only read from a file, maybe implement
+            the ability to just copy paste a big blob?
+        ☐ decouple the flag parsing stuff from the `parser` package
+
+    Small:
+        ☐ specify output file as command line option
+        ☐ publish godoc
+        ☐ revise readme file 
+
+Testing:
+    ☐ get some larger JSON files to test/validate/snapshot with
+    ☐ add `go test` examples
+
+Tooling:
+    ☐ fix the weird assert package import thing
+        sometimes when I use `assert` in a test file it auto imports a weird 
+        package and not the testify/assert one it should
+    ☐ make golint/gofmt order package imports the way I like them ordered
+        go standard packages, newline, third party packages, newline, internal
+        packages
+    ☐ something is weird with my current "build on save" configuration
+    ☐ configure .envrc file and handling
+
+Questions:
+    ☐ end to end integration tests in go?
+    ☐ useful test coverage for the main package?
+    ☐ is this general directory structure okay?
+        should the packages under `/internal` be there? should that directory be
+        named something different?
+    ☐ the object package has a lot of duplicate code, can we not?
+    ☐ is there a way to run `make` commands from anywhere in the repo?
+    
+    
+
+
