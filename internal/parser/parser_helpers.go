@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"log"
+	"strings"
 
 	"github.com/samsarahq/go/oops"
 )
@@ -18,6 +19,7 @@ func ParseArgs(args []string) (*Config, string, error) {
 
 	var cfg Config
 	flags.StringVar(&cfg.Infile, "infile", "", "specify input file")
+	flags.StringVar(&cfg.Outfile, "outfile", "", "specify output file")
 
 	err := flags.Parse(args[1:])
 	if err != nil {
@@ -48,4 +50,23 @@ func HandleParseError(output string, err error) (int, error) {
 	// Parsing was successful, so return the exit status code of 0 indicating
 	// success, and no error.
 	return 0, nil
+}
+
+// SetDefaultOutfile sets the Outfile field on the given Config to be the
+// outfile path. The default path for an outfile is defined as
+// [INFILE_BASE].output.csv. Returns an error if an Outfile already exists on
+// the given Config.
+func (cfg *Config) SetDefaultOutfile() error {
+	if len(cfg.Outfile) > 0 {
+		return oops.Errorf("outfile already exists on Config: %v", cfg)
+	}
+
+	// Build the path for the output file.
+	splitPath := strings.Split(cfg.Infile, ".")
+	splitPath[len(splitPath)-1] = "output"
+	splitPath = append(splitPath, "csv")
+	outputPath := strings.Join(splitPath, ".")
+	cfg.Outfile = outputPath
+
+	return nil
 }
