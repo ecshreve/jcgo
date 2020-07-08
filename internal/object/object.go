@@ -25,6 +25,8 @@ func (objs ByPrefix) Swap(i, j int)      { objs[i], objs[j] = objs[j], objs[i] }
 // error if the interface is of an invalid type.
 func FromInterface(prefix string, input interface{}) (Object, error) {
 	switch vv := input.(type) {
+	case nil:
+		return NewStringObj(prefix, ""), nil
 	case string:
 		return NewStringObj(prefix, vv), nil
 	case bool:

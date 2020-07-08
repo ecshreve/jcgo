@@ -16,6 +16,11 @@ func TestObjectCreation(t *testing.T) {
 		expectError bool
 	}{
 		{
+			description: "create nil StringObj",
+			input:       nil,
+			expectError: false,
+		},
+		{
 			description: "create StringObj",
 			input:       "this is a string",
 			expectError: false,
