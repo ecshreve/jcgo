@@ -1,3 +1,5 @@
+// Package parser provides functions to read from data from a JSON file,
+// transform that data, then write it a CSV file.
 package parser
 
 import (
@@ -28,7 +30,7 @@ type Config struct {
 //  - Non-JSON input file provided.
 //  - Non-CSV output file provided.
 //
-// TODO: some open questions re: edge case handlin
+// TODO: some open questions re: edge case handling
 //  - is it possible for the Config to not have an outfile here? how should that
 //    be handled?
 //  - what happens if the Config's outfile already exists?
@@ -114,7 +116,7 @@ func Transform(input map[string]interface{}) (oo.Object, error) {
 	return obj, nil
 }
 
-// Convert converts the given json file at the given path to a csv file, or
+// Convert converts the given JSON file at the given path to a CSV file, or
 // returns an error if unable to convert the file.
 func Convert(cfg *Config) (*os.File, error) {
 	// Read the JSON file into a map.

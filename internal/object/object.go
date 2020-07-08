@@ -1,3 +1,5 @@
+// Package object provides the different implementations of the Object interface
+// representing the different possible JSON input types.
 package object
 
 import (

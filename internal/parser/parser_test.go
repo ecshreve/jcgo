@@ -326,7 +326,7 @@ func TestTransform(t *testing.T) {
 }
 
 func TestFileOperations(t *testing.T) {
-	// Verify we can read a valid json file.
+	// Verify we can read a valid JSON file.
 	raw, err := parser.ReadJSONFile("../testdata/jsontest.json")
 	assert.NoError(t, err)
 	assert.NotNil(t, raw)

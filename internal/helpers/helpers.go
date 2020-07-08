@@ -1,3 +1,5 @@
+// Package helpers is a place for general purpose functions. Currently it only
+// holds one function to aid in truncating column headers for the CSV.
 package helpers
 
 import (
