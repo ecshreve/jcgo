@@ -66,6 +66,16 @@ func (o MapObj) Parse() ([][]string, error) {
 			}
 			continue
 		}
+
+		// If the parsed item is not a simple scalar then update each existing
+		// row, and add additional rows as needed.
+		lastRow := ret[len(ret)-1]
+		for i := 1; i < len(parsed); i++ {
+			if i == len(ret) {
+				ret = append(ret, lastRow)
+			}
+			ret[i] = append(ret[i], parsed[i]...)
+		}
 	}
 
 	return ret, nil
