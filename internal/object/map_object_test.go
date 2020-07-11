@@ -6,8 +6,8 @@ import (
 	"github.com/samsarahq/go/snapshotter"
 	"github.com/stretchr/testify/assert"
 
-	oo "github.com/ecshreve/jcgo/pkg/object"
-	"github.com/ecshreve/jcgo/pkg/testdata"
+	oo "github.com/ecshreve/jcgo/internal/object"
+	"github.com/ecshreve/jcgo/internal/testdata"
 )
 
 func TestSimpleParseMapObject(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 	"github.com/samsarahq/go/snapshotter"
 	"github.com/stretchr/testify/assert"
 
-	oo "github.com/ecshreve/jcgo/pkg/object"
+	oo "github.com/ecshreve/jcgo/internal/object"
 )
 
 func TestObjectCreation(t *testing.T) {

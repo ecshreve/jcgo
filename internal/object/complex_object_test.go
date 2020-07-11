@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	oo "github.com/ecshreve/jcgo/pkg/object"
-	"github.com/ecshreve/jcgo/pkg/testdata"
+	oo "github.com/ecshreve/jcgo/internal/object"
+	"github.com/ecshreve/jcgo/internal/testdata"
 )
 
 func TestComplexObject(t *testing.T) {
