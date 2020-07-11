@@ -7,6 +7,7 @@ type ObjectTestData struct {
 	SimpleArrayMapInput       interface{}
 	SimpleMapArrayInput       interface{}
 	ComplexInput1             interface{}
+	ComplexInput2             interface{}
 }
 
 func NewObjectTestData() *ObjectTestData {
@@ -77,6 +78,64 @@ func NewObjectTestData() *ObjectTestData {
 		},
 	}
 
+	complexInput2 := map[string]interface{}{
+		"data": []interface{}{
+			map[string]interface{}{
+				"key1": "val1",
+				"nestedmap": map[string]interface{}{
+					"nested1": "nestedval1",
+					"nested2": "nestedval2",
+				},
+				"nestedslice": []interface{}{
+					map[string]interface{}{
+						"before": []interface{}{
+							map[string]interface{}{
+								"nestedslicemap1": "nestedslicemapval1",
+								"nestedslicemap2": "nestedslicemapval2",
+							},
+							map[string]interface{}{
+								"nestedslicemap1": "nestedslicemapval3",
+								"nestedslicemap2": "nestedslicemapval4",
+							},
+						},
+						"after": []interface{}{
+							map[string]interface{}{
+								"nestedslicemap1": "nestedslicemapval5",
+								"nestedslicemap2": "nestedslicemapval6",
+							},
+							map[string]interface{}{
+								"nestedslicemap1": "nestedslicemapval7",
+								"nestedslicemap2": "nestedslicemapval8",
+							},
+						},
+					},
+					map[string]interface{}{
+						"before": []interface{}{
+							map[string]interface{}{
+								"nestedslicemap1": "nestedslicemapval11",
+								"nestedslicemap2": "nestedslicemapval12",
+							},
+							map[string]interface{}{
+								"nestedslicemap1": "nestedslicemapval13",
+								"nestedslicemap2": "nestedslicemapval14",
+							},
+						},
+						"after": []interface{}{
+							map[string]interface{}{
+								"nestedslicemap1": "nestedslicemapval15",
+								"nestedslicemap2": "nestedslicemapval16",
+							},
+							map[string]interface{}{
+								"nestedslicemap1": "nestedslicemapval17",
+								"nestedslicemap2": "nestedslicemapval18",
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
 	return &ObjectTestData{
 		SimpleMapInput:            simpleMapInput,
 		SimpleNestedMapInput:      simpleNestedMapInput,
@@ -84,5 +143,6 @@ func NewObjectTestData() *ObjectTestData {
 		SimpleArrayMapInput:       simpleArrayMapInput,
 		SimpleMapArrayInput:       simpleMapArrayInput,
 		ComplexInput1:             complexInput1,
+		ComplexInput2:             complexInput2,
 	}
 }

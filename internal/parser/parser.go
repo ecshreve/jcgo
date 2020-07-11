@@ -12,7 +12,7 @@ import (
 	"github.com/samsarahq/go/oops"
 
 	"github.com/ecshreve/jcgo/internal/helpers"
-	oo "github.com/ecshreve/jcgo/internal/object"
+	oo "github.com/ecshreve/jcgo/pkg/object"
 )
 
 // Config represents various configuration parameters for one JSON to CSV

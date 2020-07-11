@@ -46,6 +46,17 @@ func TestComplexObject(t *testing.T) {
 				{"val1", "val2", "nval2", "val3", "val4", "nval4"},
 			},
 		},
+		{
+			description: "parse complex input 2",
+			input:       data.ComplexInput2,
+			expected: [][]string{
+				{"data_key1", "data_nestedmap_nested1", "data_nestedmap_nested2", "data_nestedslice_after_nestedslicemap1", "data_nestedslice_after_nestedslicemap2", "data_nestedslice_before_nestedslicemap1", "data_nestedslice_before_nestedslicemap2"},
+				{"val1", "nestedval1", "nestedval2", "nestedslicemapval5", "nestedslicemapval6", "nestedslicemapval1", "nestedslicemapval2"},
+				{"val1", "nestedval1", "nestedval2", "nestedslicemapval7", "nestedslicemapval8", "nestedslicemapval3", "nestedslicemapval4"},
+				{"val1", "nestedval1", "nestedval2", "nestedslicemapval15", "nestedslicemapval16", "nestedslicemapval11", "nestedslicemapval12"},
+				{"val1", "nestedval1", "nestedval2", "nestedslicemapval17", "nestedslicemapval18", "nestedslicemapval13", "nestedslicemapval14"},
+			},
+		},
 	}
 
 	for _, testcase := range testcases {
@@ -55,7 +66,6 @@ func TestComplexObject(t *testing.T) {
 
 			parsed, err := obj.Parse()
 			assert.NoError(t, err)
-
 			assert.Equal(t, testcase.expected, parsed)
 		})
 	}
