@@ -1,0 +1,44 @@
+[
+  {
+    "Name": "create nil StringObj",
+    "Values": [
+      {
+        "Prefix": "",
+        "Val": ""
+      }
+    ]
+  },
+  {
+    "Name": "create StringObj",
+    "Values": [
+      {
+        "Prefix": "",
+        "Val": "this is a string"
+      }
+    ]
+  },
+  {
+    "Name": "create BoolObj",
+    "Values": [
+      {
+        "Prefix": "",
+        "Val": true
+      }
+    ]
+  },
+  {
+    "Name": "create NumberObj",
+    "Values": [
+      {
+        "Prefix": "",
+        "Val": 10
+      }
+    ]
+  },
+  {
+    "Name": "invalid scalar input",
+    "Values": [
+      null
+    ]
+  }
+]
