@@ -20,3 +20,6 @@ bin/
 # Files used for manual local testing.
 jsontestlocal.json
 jsontestlocal.output.csv
+
+# local vscode config
+.vscode
