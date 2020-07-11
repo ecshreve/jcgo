@@ -56,6 +56,12 @@ func FromInterface(prefix string, input interface{}) (Object, error) {
 			return nil, oops.Wrapf(err, "unable to create MapObj for interface: %+v", vv)
 		}
 		return obj, nil
+	case []interface{}:
+		obj, err := NewArrayObj(prefix, vv)
+		if err != nil {
+			return nil, oops.Wrapf(err, "unable to create ArrayObj for interface: %+v", vv)
+		}
+		return obj, nil
 	default:
 		return nil, oops.Errorf("unable to create Object from interface: %+v", input)
 	}

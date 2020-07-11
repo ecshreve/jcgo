@@ -53,6 +53,16 @@ func TestObjectCreation(t *testing.T) {
 			input:       map[string]interface{}{"key": int64(1)},
 			expectError: true,
 		},
+		{
+			description: "create ArrayObj",
+			input:       []interface{}{"str1", "str2"},
+			expectError: false,
+		},
+		{
+			description: "invalid type in array",
+			input:       []interface{}{"str1", int64(1)},
+			expectError: true,
+		},
 	}
 
 	for _, testcase := range testcases {
@@ -100,6 +110,35 @@ func TestParseObject(t *testing.T) {
 			expected: [][]string{
 				{"pref1"},
 				{"5"},
+			},
+		},
+		{
+			description: "simple map",
+			input: &oo.MapObj{
+				oo.NewPrefix("pref"),
+				[]string{"key"},
+				map[string]oo.Object{
+					"key": oo.StringObj{oo.NewPrefix("pref_key"), "val"},
+				},
+			},
+			expected: [][]string{
+				{"pref_key"},
+				{"val"},
+			},
+		},
+		{
+			description: "simple array",
+			input: &oo.ArrayObj{
+				oo.NewPrefix("pref"),
+				[]oo.Object{
+					oo.StringObj{oo.NewPrefix("pref"), "val1"},
+					oo.StringObj{oo.NewPrefix("pref"), "val2"},
+				},
+			},
+			expected: [][]string{
+				{"pref"},
+				{"val1"},
+				{"val2"},
 			},
 		},
 	}

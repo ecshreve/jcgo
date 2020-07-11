@@ -40,5 +40,52 @@
     "Values": [
       null
     ]
+  },
+  {
+    "Name": "create MapObj",
+    "Values": [
+      {
+        "Prefix": "",
+        "SortedKeys": [
+          "key"
+        ],
+        "Val": {
+          "key": {
+            "Prefix": "key",
+            "Val": "value"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "Name": "invalid type in map",
+    "Values": [
+      null
+    ]
+  },
+  {
+    "Name": "create ArrayObj",
+    "Values": [
+      {
+        "Prefix": "",
+        "Val": [
+          {
+            "Prefix": "",
+            "Val": "str1"
+          },
+          {
+            "Prefix": "",
+            "Val": "str2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "invalid type in array",
+    "Values": [
+      null
+    ]
   }
 ]
