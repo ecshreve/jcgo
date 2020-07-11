@@ -1,0 +1,129 @@
+[
+  {
+    "Name": "simple map -- MapObj",
+    "Values": [
+      {
+        "Prefix": "",
+        "SortedKeys": [
+          "key1",
+          "key2",
+          "key3"
+        ],
+        "Val": {
+          "key1": {
+            "Prefix": "key1",
+            "Val": "value1"
+          },
+          "key2": {
+            "Prefix": "key2",
+            "Val": "value2"
+          },
+          "key3": {
+            "Prefix": "key3",
+            "Val": "value3"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "Name": "simple map -- parsed",
+    "Values": [
+      [
+        [
+          "key1",
+          "key2",
+          "key3"
+        ],
+        [
+          "value1",
+          "value2",
+          "value3"
+        ]
+      ]
+    ]
+  },
+  {
+    "Name": "simple nested map object -- MapObj",
+    "Values": [
+      {
+        "Prefix": "",
+        "SortedKeys": [
+          "outer"
+        ],
+        "Val": {
+          "outer": {
+            "Prefix": "outer",
+            "SortedKeys": [
+              "inner"
+            ],
+            "Val": {
+              "inner": {
+                "Prefix": "outer_inner",
+                "Val": "inner val"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "Name": "simple nested map object -- parsed",
+    "Values": [
+      [
+        [
+          "outer_inner"
+        ],
+        [
+          "inner val"
+        ]
+      ]
+    ]
+  },
+  {
+    "Name": "simple mixed nested map object -- MapObj",
+    "Values": [
+      {
+        "Prefix": "",
+        "SortedKeys": [
+          "key",
+          "outer"
+        ],
+        "Val": {
+          "key": {
+            "Prefix": "key",
+            "Val": "val"
+          },
+          "outer": {
+            "Prefix": "outer",
+            "SortedKeys": [
+              "inner"
+            ],
+            "Val": {
+              "inner": {
+                "Prefix": "outer_inner",
+                "Val": "inner val"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  {
+    "Name": "simple mixed nested map object -- parsed",
+    "Values": [
+      [
+        [
+          "key",
+          "outer_inner"
+        ],
+        [
+          "val",
+          "inner val"
+        ]
+      ]
+    ]
+  }
+]

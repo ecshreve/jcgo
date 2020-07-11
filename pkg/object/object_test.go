@@ -43,6 +43,16 @@ func TestObjectCreation(t *testing.T) {
 			input:       int64(1),
 			expectError: true,
 		},
+		{
+			description: "create MapObj",
+			input:       map[string]interface{}{"key": "value"},
+			expectError: false,
+		},
+		{
+			description: "invalid type in map",
+			input:       map[string]interface{}{"key": int64(1)},
+			expectError: true,
+		},
 	}
 
 	for _, testcase := range testcases {

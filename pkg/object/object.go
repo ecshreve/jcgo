@@ -18,6 +18,9 @@ func (p Prefix) getPrefix() string {
 
 // NewPrefix returns a pointer to a Prefix for the given string.
 func NewPrefix(p string) *Prefix {
+	if len(p) > 0 && p[0] == '_' {
+		p = p[1:]
+	}
 	pp := Prefix(p)
 	return &pp
 }
@@ -47,6 +50,12 @@ func FromInterface(prefix string, input interface{}) (Object, error) {
 		return NewBoolObj(prefix, vv), nil
 	case float64:
 		return NewNumberObj(prefix, vv), nil
+	case map[string]interface{}:
+		obj, err := NewMapObj(prefix, vv)
+		if err != nil {
+			return nil, oops.Wrapf(err, "unable to create MapObj for interface: %+v", vv)
+		}
+		return obj, nil
 	default:
 		return nil, oops.Errorf("unable to create Object from interface: %+v", input)
 	}
