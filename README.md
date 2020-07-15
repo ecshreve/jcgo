@@ -1,7 +1,6 @@
 # jcgo
 
 [![Go](https://github.com/ecshreve/jcgo/workflows/Go/badge.svg?branch=master)](https://github.com/ecshreve/jcgo/actions)
-[![GoDoc](https://godoc.org/github.com/ecshreve/jcgo?status.svg)](https://godoc.org/github.com/ecshreve/jcgo)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ecshreve/jcgo)](https://goreportcard.com/report/github.com/ecshreve/jcgo)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/ecshreve/jcgo)](https://golang.org/doc/go1.14)
 [![codecov](https://codecov.io/gh/ecshreve/jcgo/branch/master/graph/badge.svg)](https://codecov.io/gh/ecshreve/jcgo)
