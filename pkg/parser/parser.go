@@ -37,12 +37,12 @@ func ConvertJSONFile(path string) (*os.File, error) {
 		return nil, oops.Wrapf(err, "unable to read json file: %s", path)
 	}
 
-	err = pp.BuildRootObj()
+	err = pp.buildRootObj()
 	if err != nil {
 		return nil, oops.Wrapf(err, "unable to build root object for map: %v", pp.Raw)
 	}
 
-	err = pp.Parse()
+	err = pp.parse()
 	if err != nil {
 		return nil, oops.Wrapf(err, "unable to parse root object: %v", pp.RootObj)
 	}
@@ -55,10 +55,10 @@ func ConvertJSONFile(path string) (*os.File, error) {
 	return pp.Outfile, nil
 }
 
-// BuildRootObj sets the Parser's RootObj field to the Object representation of
+// buildRootObj sets the Parser's RootObj field to the Object representation of
 // the map defined in the Parser's Raw field. It returns an error if unable to
 // build the Object.
-func (p *Parser) BuildRootObj() error {
+func (p *Parser) buildRootObj() error {
 	obj, err := oo.FromInterface("", *p.Raw)
 	if err != nil {
 		return oops.Wrapf(err, "unable to build Object from interface")
@@ -68,9 +68,9 @@ func (p *Parser) BuildRootObj() error {
 	return nil
 }
 
-// Parse sets the Parser's ParsedData field to a 2d slice of strings built from
+// parse sets the Parser's ParsedData field to a 2d slice of strings built from
 // the Parser's RootObj, returns an error if unsuccessful.
-func (p *Parser) Parse() error {
+func (p *Parser) parse() error {
 	if p.RootObj == nil {
 		return oops.Errorf("no root object defined on Parser")
 	}
