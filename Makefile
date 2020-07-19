@@ -18,3 +18,6 @@ testv:
 testc:
 	go test -race -coverprofile=coverage.txt -covermode=atomic github.com/ecshreve/jcgo/...
 
+clean:
+	rm *.csv
+

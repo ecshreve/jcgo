@@ -4,36 +4,35 @@ import (
 	"log"
 	"os"
 
-	"github.com/ecshreve/jcgo/internal/parser"
+	"github.com/ecshreve/jcgo/pkg/parser"
 )
 
 func main() {
-	cfg, output, err := parser.ParseArgs(os.Args)
-	// Handle any errors that resulted from parsing flags.
-	exitCode, err := parser.HandleParseError(output, err)
+	if len(os.Args) < 2 {
+		log.Fatal("please provide an input file")
+	}
+
+	pp := parser.NewParser(true)
+
+	err := pp.ReadJSONFile(os.Args[1])
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error reading json file: %v", err)
 	}
 
-	// We'll hit this condition when the user enters `--help` as a command line
-	// flag, but it isn't implemented.
-	//
-	// TODO: fix this because it's silly.
-	if exitCode > 0 {
-		os.Exit(exitCode)
-	}
-
-	// Validate the parser.Config that results from parsing flags.
-	err = cfg.Validate()
+	err = pp.BuildRootObj()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error building root object: %v", err)
 	}
 
-	// Convert the JSON file to a CSV file.
-	file, err := parser.Convert(cfg)
+	err = pp.Parse()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error parsing root object: %v", err)
 	}
 
-	log.Printf("successfully created %s", file.Name())
+	err = pp.WriteCSVFile(pp.ParsedData)
+	if err != nil {
+		log.Fatalf("error writing json file: %v", err)
+	}
+
+	log.Printf("generated csv file: %v\n", pp.Outfile.Name())
 }

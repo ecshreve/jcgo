@@ -1,10 +1,10 @@
-// Package helpers is a place for general purpose functions. Currently it only
-// holds one function to aid in truncating column headers for the CSV.
-package helpers
+package parser
 
 import (
+	"fmt"
 	"sort"
 	"strings"
+	"time"
 )
 
 // TruncateColumnHeaders returns a slice of strings with the longest common
@@ -59,4 +59,14 @@ func TruncateColumnHeaders(headers []string) []string {
 	}
 
 	return headers
+}
+
+// GetDefaultOutfilePath returns the default file path for an output file.
+//
+// The default directory for the output file is the root directory of the
+// module. The filename is of the form `data_<seconds_epoch>.output.csv`.
+func GetDefaultOutfilePath() *string {
+	timeNowMs := time.Now().Unix()
+	outFilePath := fmt.Sprintf("data_%d.output.csv", timeNowMs)
+	return &outFilePath
 }
