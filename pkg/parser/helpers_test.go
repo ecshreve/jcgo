@@ -10,20 +10,45 @@ import (
 )
 
 func TestReadJSONFile(t *testing.T) {
-	// Expect error if file doesn't exist.
-	rawData, err := parser.ReadJSONFile("../testdata/nonexistentfile.json")
-	assert.Error(t, err)
-	assert.Nil(t, rawData)
+	testcases := []struct {
+		description string
+		infilePath  string
+		expectError bool
+	}{
+		{
+			description: "expect error if infile isn't a json file",
+			infilePath:  "../testdata/filename.somenonjsonextension",
+			expectError: true,
+		},
+		{
+			description: "expect error if infile doesn't exist",
+			infilePath:  "../testdata/nonexistentfile.json",
+			expectError: true,
+		},
+		{
+			description: "expect error if infile is malformed",
+			infilePath:  "../testdata/jsontest_bad.json",
+			expectError: true,
+		},
+		{
+			description: "expect success for valid infile",
+			infilePath:  "../testdata/jsontest.json",
+			expectError: false,
+		},
+	}
 
-	// Expect error if file is malformed.
-	rawData, err = parser.ReadJSONFile("../testdata/jsontest_bad.json")
-	assert.Error(t, err)
-	assert.Nil(t, rawData)
-
-	// Verify we can read a valid JSON file.
-	rawData, err = parser.ReadJSONFile("../testdata/jsontest.json")
-	assert.NoError(t, err)
-	assert.NotNil(t, rawData)
+	for _, testcase := range testcases {
+		t.Run(testcase.description, func(t *testing.T) {
+			rawData, err := parser.ReadJSONFile(testcase.infilePath)
+			if testcase.expectError {
+				assert.Error(t, err)
+				assert.Nil(t, rawData)
+			} else {
+				assert.NoError(t, err)
+				assert.NotNil(t, rawData)
+			}
+		})
+	}
 }
 
 func TestWriteJSONFile(t *testing.T) {
