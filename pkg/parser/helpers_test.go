@@ -1,12 +1,53 @@
 package parser_test
 
 import (
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
 	"github.com/ecshreve/jcgo/pkg/parser"
 )
+
+func TestReadJSONFile(t *testing.T) {
+	// Expect error if file doesn't exist.
+	rawData, err := parser.ReadJSONFile("../testdata/nonexistentfile.json")
+	assert.Error(t, err)
+	assert.Nil(t, rawData)
+
+	// Expect error if file is malformed.
+	rawData, err = parser.ReadJSONFile("../testdata/jsontest_bad.json")
+	assert.Error(t, err)
+	assert.Nil(t, rawData)
+
+	// Verify we can read a valid JSON file.
+	rawData, err = parser.ReadJSONFile("../testdata/jsontest.json")
+	assert.NoError(t, err)
+	assert.NotNil(t, rawData)
+}
+
+func TestWriteJSONFile(t *testing.T) {
+	// Verify we can write valid data to CSV.
+	data := [][]string{
+		{"one", "two"},
+		{"one_one", "two_two"},
+	}
+
+	// Expect error for a bad path.
+	badOutfilePath := "../testdata/nonexistentdirectory/testoutput.xls"
+	outfile, err := parser.WriteCSVFile(data, &badOutfilePath)
+	assert.Error(t, err)
+	assert.Nil(t, outfile)
+
+	// Expect success for a good path.
+	goodOutfilePath := "../testdata/testoutput.csv"
+	outfile, err = parser.WriteCSVFile(data, &goodOutfilePath)
+	assert.NoError(t, err)
+	assert.NotNil(t, outfile)
+
+	// Remove the file we just created.
+	os.Remove(outfile.Name())
+}
 
 func TestTruncateColumnHeaders(t *testing.T) {
 	testcases := []struct {

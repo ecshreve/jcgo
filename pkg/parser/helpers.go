@@ -1,11 +1,90 @@
 package parser
 
 import (
+	"encoding/csv"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/samsarahq/go/oops"
 )
+
+// ReadJSONFile returns a pointer to the map representation of the JSON file at
+// the given path or an error if reading the JSON file was unsuccessful.
+func ReadJSONFile(path string) (*map[string]interface{}, error) {
+	// Check that the given file is a JSON file.
+	ext := filepath.Ext(path)
+	if ext != ".json" {
+		return nil, oops.Errorf("input file must be a JSON file: %s", path)
+	}
+
+	// Open the file specified by path.
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, oops.Wrapf(err, "unable to open file %s", path)
+	}
+	defer file.Close()
+
+	// Read the file into a byte array.
+	byteValue, err := ioutil.ReadAll(file)
+	if err != nil {
+		return nil, oops.Wrapf(err, "unable to read file %s to byte array", file.Name())
+	}
+
+	// Unmarshall the byte array into a map.
+	var result map[string]interface{}
+	if err = json.Unmarshal([]byte(byteValue), &result); err != nil {
+		return nil, oops.Wrapf(err, "unable to unmarshal byte array to map")
+	}
+
+	return &result, nil
+}
+
+// WriteCSVFile writes the given 2d slice of strings to a CSV file at the given
+// path. It returns a pointer to the output file, or an error if unsuccessful.
+//
+// If no path is provided, then a default filename is generated. This function
+// treats the first row in the data argument as the headers for  the CSV file.
+func WriteCSVFile(data [][]string, path *string) (*os.File, error) {
+	var outfilePath *string
+	// If no path is provided create a default output filename.
+	if path == nil {
+		outfilePath = GetDefaultOutfilePath()
+	} else {
+		// Check that the given output file is a CSV file.
+		ext := filepath.Ext(*path)
+		if ext != ".csv" {
+			return nil, oops.Errorf("output file must be a CSV file: %s", *path)
+		}
+		outfilePath = path
+	}
+
+	// Create the output file.
+	file, err := os.Create(*outfilePath)
+	if err != nil {
+		return nil, oops.Wrapf(err, "unable to create output file for path: %s", *outfilePath)
+	}
+	defer file.Close()
+
+	// Create a CSV writer.
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	// Write each row in the data to a CSV file at the given path.
+	for _, value := range data {
+		err := writer.Write(value)
+		if err != nil {
+			return nil, oops.Wrapf(err, "unable to write value: %+v to file: %s", value, file.Name())
+		}
+	}
+
+	return file, nil
+}
 
 // TruncateColumnHeaders returns a slice of strings with the longest common
 // prefix among all the elements removed from each.

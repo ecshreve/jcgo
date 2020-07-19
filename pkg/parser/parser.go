@@ -1,9 +1,6 @@
 package parser
 
 import (
-	"encoding/csv"
-	"encoding/json"
-	"io/ioutil"
 	"os"
 
 	"github.com/samsarahq/go/oops"
@@ -13,7 +10,7 @@ import (
 
 // Parser is a representation of a JSON to CSV parsing session.
 type Parser struct {
-	Raw             map[string]interface{}
+	Raw             *map[string]interface{}
 	RootObj         oo.Object
 	ParsedData      [][]string
 	TruncateHeaders bool
@@ -23,17 +20,46 @@ type Parser struct {
 }
 
 // NewParser returns a new instance of a Parser.
-func NewParser(truncateHeaders bool) *Parser {
+func NewParser(truncateHeaders bool, infilePath string) *Parser {
 	return &Parser{
 		TruncateHeaders: truncateHeaders,
+		InfilePath:      &infilePath,
 	}
 }
 
-// BuildRootObj sets the Parser's RootObj to field to the Object representation
-// of the map defined in the Parser's Raw field. It returns an error if unable
-// to build the Object.
+// ConvertJSONFile converts a JSON file at the given path to a CSV file, and
+// returns a pointer to the newly created file, or an error if unsuccessful.
+func ConvertJSONFile(path string) (*os.File, error) {
+	pp := NewParser(true, path)
+
+	err := pp.readJSONFile()
+	if err != nil {
+		return nil, oops.Wrapf(err, "unable to read json file: %s", path)
+	}
+
+	err = pp.BuildRootObj()
+	if err != nil {
+		return nil, oops.Wrapf(err, "unable to build root object for map: %v", pp.Raw)
+	}
+
+	err = pp.Parse()
+	if err != nil {
+		return nil, oops.Wrapf(err, "unable to parse root object: %v", pp.RootObj)
+	}
+
+	err = pp.writeCSVFile()
+	if err != nil {
+		return nil, oops.Wrapf(err, "unable to write data to csv file, data: %v", pp.ParsedData)
+	}
+
+	return pp.Outfile, nil
+}
+
+// BuildRootObj sets the Parser's RootObj field to the Object representation of
+// the map defined in the Parser's Raw field. It returns an error if unable to
+// build the Object.
 func (p *Parser) BuildRootObj() error {
-	obj, err := oo.FromInterface("", p.Raw)
+	obj, err := oo.FromInterface("", *p.Raw)
 	if err != nil {
 		return oops.Wrapf(err, "unable to build Object from interface")
 	}
@@ -42,8 +68,8 @@ func (p *Parser) BuildRootObj() error {
 	return nil
 }
 
-// Parse builds a 2d slice of strings from the Parser's RootObj, returns an
-// error if unsuccessful.
+// Parse sets the Parser's ParsedData field to a 2d slice of strings built from
+// the Parser's RootObj, returns an error if unsuccessful.
 func (p *Parser) Parse() error {
 	if p.RootObj == nil {
 		return oops.Errorf("no root object defined on Parser")
@@ -59,68 +85,47 @@ func (p *Parser) Parse() error {
 	return nil
 }
 
-// ReadJSONFile reads the JSON file at the given path into the Parser's Raw map.
-// It returns an error if reading the JSON file was unsuccessful.
-func (p *Parser) ReadJSONFile(path string) error {
-	file, err := os.Open(path)
+// readJSONFile reads the JSON file specified by the Parser's InfilePath field
+// and stores the resulting map in the Parser's Raw field. Returns an error if
+// reading the file was unnsuccessful.
+func (p *Parser) readJSONFile() error {
+	raw, err := ReadJSONFile(*p.InfilePath)
 	if err != nil {
-		return oops.Wrapf(err, "unable to open file %s", path)
-	}
-	defer file.Close()
-
-	// Read the file into a byte array.
-	byteValue, err := ioutil.ReadAll(file)
-	if err != nil {
-		return oops.Wrapf(err, "unable to read file %s to byte array", file.Name())
+		return oops.Wrapf(err, "unable to read json file: %s", *p.InfilePath)
 	}
 
-	// Unmarshall the byte array into a map.
-	var result map[string]interface{}
-	if err = json.Unmarshal([]byte(byteValue), &result); err != nil {
-		return oops.Wrapf(err, "unable to unmarshal byte array to map")
-	}
+	// Store a pointer to the map in the Parser.
+	p.Raw = raw
 
-	// Store the map in the Parser.
-	p.Raw = result
 	return nil
 }
 
-// WriteCSVFile writes the given 2d slice of strings to a CSV file, returns an
-// error if unsuccessful.
+// writeCSVFile writes the data in the Parser's ParsedData field to the CSV file
+// defined in the Parser's OutfilePath field. Returns an error if unsuccessful.
 //
-// This function treats the first row in the input as headers for the CSV file.
-func (p *Parser) WriteCSVFile(data [][]string) error {
+// If the Parser's TruncateHeaders field is set to true then headers in the
+// first row of the Parser's ParsedData field are truncated prior to writing the
+// CSV file.
+func (p *Parser) writeCSVFile() error {
 	// Check if an OutfilePath is already defined, if not set it to the default.
 	if p.OutfilePath == nil {
 		p.OutfilePath = GetDefaultOutfilePath()
 	}
 
-	// Create the output file.
-	file, err := os.Create(*p.OutfilePath)
-	if err != nil {
-		return oops.Wrapf(err, "unable to create output file for path: %v \n %v", *p.OutfilePath, file)
-	}
-	defer file.Close()
-
-	// Create a CSV writer.
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
-
 	// If the Parser is configured to do so, remove the longest common prefix
 	// among all of the header strings.
 	if p.TruncateHeaders {
-		data[0] = TruncateColumnHeaders(data[0])
+		p.ParsedData[0] = TruncateColumnHeaders(p.ParsedData[0])
 	}
 
-	// Write each row in the data to a CSV file at the given path.
-	for _, value := range data {
-		err := writer.Write(value)
-		if err != nil {
-			return oops.Wrapf(err, "unable to write value: %+v to file: %s", value, file.Name())
-		}
+	// Write the Parser's ParsedData to a csv file.
+	outfile, err := WriteCSVFile(p.ParsedData, p.OutfilePath)
+	if err != nil {
+		return oops.Wrapf(err, "unable to write csv file: %s", *p.OutfilePath)
 	}
 
 	// Store a reference to the output file in the Parser.
-	p.Outfile = file
+	p.Outfile = outfile
+
 	return nil
 }
