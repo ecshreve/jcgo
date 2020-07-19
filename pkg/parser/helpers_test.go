@@ -51,27 +51,46 @@ func TestReadJSONFile(t *testing.T) {
 	}
 }
 
-func TestWriteJSONFile(t *testing.T) {
-	// Verify we can write valid data to CSV.
+func TestWriteCSVFile(t *testing.T) {
+	// This is a valid 2d slice of strings.
 	data := [][]string{
 		{"one", "two"},
 		{"one_one", "two_two"},
 	}
 
-	// Expect error for a bad path.
-	badOutfilePath := "../testdata/nonexistentdirectory/testoutput.xls"
-	outfile, err := parser.WriteCSVFile(data, &badOutfilePath)
-	assert.Error(t, err)
-	assert.Nil(t, outfile)
+	testcases := []struct {
+		description string
+		outfilePath string
+		expectError bool
+	}{
+		{
+			description: "expect error for a bad file type",
+			outfilePath: "../testdata/nonexistentdirectory/testoutput.xls",
+			expectError: true,
+		},
+		{
+			description: "expect error for a bad file path",
+			outfilePath: "../testdata/nonexistentdirectory/testoutput.csv",
+			expectError: true,
+		},
+		{
+			description: "expect success for a good path",
+			outfilePath: "../testdata/testoutput.csv",
+			expectError: false,
+		},
+	}
 
-	// Expect success for a good path.
-	goodOutfilePath := "../testdata/testoutput.csv"
-	outfile, err = parser.WriteCSVFile(data, &goodOutfilePath)
-	assert.NoError(t, err)
-	assert.NotNil(t, outfile)
+	for _, testcase := range testcases {
+		t.Run(testcase.description, func(t *testing.T) {
+			outfile, err := parser.WriteCSVFile(data, &testcase.outfilePath)
+			assert.Equal(t, testcase.expectError, err != nil)
+			assert.Equal(t, testcase.expectError, outfile == nil)
 
-	// Remove the file we just created.
-	os.Remove(outfile.Name())
+			if !testcase.expectError {
+				os.Remove(outfile.Name())
+			}
+		})
+	}
 }
 
 func TestTruncateColumnHeaders(t *testing.T) {
