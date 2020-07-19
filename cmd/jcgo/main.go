@@ -8,11 +8,22 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 2 {
+	if len(os.Args) == 1 {
 		log.Fatal("please provide an input file")
 	}
 
-	outfile, err := parser.ConvertJSONFile(os.Args[1])
+	if len(os.Args) > 3 {
+		log.Fatal("too many command line arguments")
+	}
+
+	infilePath := &os.Args[1]
+
+	var outfilePath *string
+	if len(os.Args) == 3 {
+		outfilePath = &os.Args[2]
+	}
+
+	outfile, err := parser.ConvertJSONFile(infilePath, outfilePath)
 	if err != nil {
 		log.Fatalf("error converting json file: %v", err)
 	}

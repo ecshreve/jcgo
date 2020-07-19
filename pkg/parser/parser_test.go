@@ -39,7 +39,7 @@ func TestConvertJSONFile(t *testing.T) {
 
 	for _, testcase := range testcases {
 		t.Run(testcase.description, func(t *testing.T) {
-			outfile, err := parser.ConvertJSONFile(testcase.infilePath)
+			outfile, err := parser.ConvertJSONFile(&testcase.infilePath, nil)
 			if testcase.expectError {
 				assert.Error(t, err)
 				assert.Nil(t, outfile)

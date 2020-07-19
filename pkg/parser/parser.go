@@ -20,21 +20,22 @@ type Parser struct {
 }
 
 // NewParser returns a new instance of a Parser.
-func NewParser(truncateHeaders bool, infilePath string) *Parser {
+func NewParser(truncateHeaders bool, infilePath, outfilePath *string) *Parser {
 	return &Parser{
 		TruncateHeaders: truncateHeaders,
-		InfilePath:      &infilePath,
+		InfilePath:      infilePath,
+		OutfilePath:     outfilePath,
 	}
 }
 
 // ConvertJSONFile converts a JSON file at the given path to a CSV file, and
 // returns a pointer to the newly created file, or an error if unsuccessful.
-func ConvertJSONFile(path string) (*os.File, error) {
-	pp := NewParser(true, path)
+func ConvertJSONFile(infilePath, outfilePath *string) (*os.File, error) {
+	pp := NewParser(true, infilePath, outfilePath)
 
 	err := pp.readJSONFile()
 	if err != nil {
-		return nil, oops.Wrapf(err, "unable to read json file: %s", path)
+		return nil, oops.Wrapf(err, "unable to read json file: %s", *infilePath)
 	}
 
 	err = pp.buildRootObj()
