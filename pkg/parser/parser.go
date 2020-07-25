@@ -1,3 +1,6 @@
+// Package parser provides implementation of a Parser that converts a JSON file
+// to a CSV file. It also provides helper functions to read JSON files and write
+// CSV files.
 package parser
 
 import (
